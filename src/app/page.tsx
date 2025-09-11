@@ -10,7 +10,6 @@ import {
   X,
   Bell,
   Filter,
-  Heart,
   Truck,
   Phone,
   Mail,
@@ -23,6 +22,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ProductCard from "./components/ProductCard";
 
 interface Farmer {
   id: number;
@@ -687,70 +687,11 @@ const Cultiv8VI = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProduce.map((item) => (
-            <div
+            <ProductCard
               key={item.id}
-              className="bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden"
-            >
-              <div className="relative">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute top-3 left-3 flex flex-col space-y-1">
-                  {item.organic && (
-                    <span className="bg-green-600 text-white px-2 py-1 rounded-full text-xs font-medium">
-                      Organic
-                    </span>
-                  )}
-                  {item.inSeason && (
-                    <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-                      In Season
-                    </span>
-                  )}
-                </div>
-                <button className="absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-red-50 transition">
-                  <Heart className="h-5 w-5 text-gray-400 hover:text-red-500" />
-                </button>
-              </div>
-
-              <div className="p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {item.name}
-                  </h3>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-green-600">
-                      ${item.price.toFixed(2)}
-                    </div>
-                    <div className="text-sm text-gray-500">per {item.unit}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center text-sm text-gray-600 mb-2">
-                  <MapPin className="h-4 w-4 mr-1" />
-                  <span>
-                    {item.farmer} • {item.location}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm text-gray-600">
-                    {item.quantity} {item.unit} available
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    Harvested {new Date(item.harvestDate).toLocaleDateString()}
-                  </span>
-                </div>
-
-                <button
-                  onClick={() => addToCart(item)}
-                  className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 font-medium"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+              product={item}
+              onAddToCart={addToCart}
+            />
           ))}
         </div>
 
