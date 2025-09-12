@@ -1,0 +1,153 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // e.g. file:./dev.db
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/* ========= Enums ========= */
+enum Role { 
+  FARMER 
+  BUSINESS 
+  ADMIN 
+}
+
+enum AvailabilityLevel { 
+  HIGH 
+  MEDIUM 
+  LOW 
+  UNAVAILABLE 
+}
+
+enum SupportType { 
+  PHONE 
+  EMAIL 
+  LIVE_CHAT 
+  COMMUNITY 
+}
+
+/* ========= Catalog ========= */
+model Category {
+  id       String   @id          // e.g. "vegetables", "fruits"
+  name     String
+  icon     String?
+  products Product[]
+
+  @@unique([name])
+}
+
+model Farmer {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  location    String
+  rating      Float    @default(0)
+  image       String?
+  certified   Boolean  @default(false)
+  specialties Json?    // string[] stored as JSON (SQLite-friendly)
+  products    Product[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([location])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  farmer      Farmer   @relation(fields: [farmerId], references: [id])
+  farmerId    String
+  location    String
+  price       Decimal
+  unit        String
+  quantity    Decimal
+  imageUrl    String?
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  inSeason    Boolean  @default(false)
+  organic     Boolean  @default(false)
+  harvestDate DateTime?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([location])
+  @@index([farmerId])
+}
+
+/* ========= Help Center ========= */
+model FaqCategory {
+  id   String @id     // e.g. "getting-started"
+  name String
+  faqs Faq[]
+}
+
+model Faq {
+  id          String      @id @default(cuid())
+  question    String
+  answer      String
+  category    FaqCategory @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  isPublished Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([categoryId])
+}
+
+model ArticleCategory {
+  id       String  @id     // e.g. "weather"
+  name     String
+  icon     String?
+  articles Article[]
+}
+
+model Article {
+  id          String          @id @default(cuid())
+  title       String
+  slug        String          @unique
+  summary     String
+  content     String
+  category    ArticleCategory @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  publishedAt DateTime
+  readMinutes Int             @default(5)
+  isPublished Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([categoryId, publishedAt])
+}
+
+model SeasonalItem {
+  id           String            @id @default(cuid())
+  crop         String
+  peakSeason   String
+  availability AvailabilityLevel
+  notes        String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now())
+}
+
+model SupportChannel {
+  id          String      @id @default(cuid())
+  type        SupportType
+  label       String
+  description String?
+  value       String?     // phone/email/handle
+  link        String?     // URL to chat / page
+  order       Int         @default(0)
+  isActive    Boolean     @default(true)
+}
+
+model EmergencyContact {
+  id           String @id @default(cuid())
+  organization String
+  topic        String?
+  phone        String
+  order        Int    @default(0)
+}
