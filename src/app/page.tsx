@@ -29,19 +29,11 @@ import MarketplacePage from "./MarketplacePage";
 import FarmersPage from "./FarmersPage";
 import FarmerDashboard from "./FarmerDashboard";
 
-interface Farmer {
-  id: number;
-  name: string;
-  location: string;
-  rating: number;
-  image: string;
-  certified: boolean;
-  specialties: string[];
-}
 
 interface Produce {
   id: number;
   name: string;
+  description?: string;
   farmer: string;
   location: string;
   price: number;
@@ -75,41 +67,9 @@ const Cultiv8VI = () => {
   const [notifications, setNotifications] = useState(3);
   const [showFilters, setShowFilters] = useState(false);
 
-  // Sample data
-  const farmers: Farmer[] = [
-    {
-      id: 1,
-      name: "Green Valley Farm",
-      location: "St. Thomas",
-      rating: 4.8,
-      image:
-        "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&h=200&fit=crop",
-      certified: true,
-      specialties: ["Organic Vegetables", "Herbs", "Tropical Fruits"],
-    },
-    {
-      id: 2,
-      name: "Tropical Paradise Gardens",
-      location: "St. John",
-      rating: 4.9,
-      image:
-        "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=300&h=200&fit=crop",
-      certified: true,
-      specialties: ["Mangoes", "Papayas", "Coconuts"],
-    },
-    {
-      id: 3,
-      name: "Island Fresh Produce",
-      location: "St. Croix",
-      rating: 4.7,
-      image:
-        "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=200&fit=crop",
-      certified: false,
-      specialties: ["Root Vegetables", "Plantains", "Peppers"],
-    },
-  ];
 
-  const produce: Produce[] = [
+  // Sample produce for farmer dashboard - in real app this would come from user's products
+  const sampleProduceForDashboard: Produce[] = [
     {
       id: 1,
       name: "Organic Tomatoes",
@@ -118,57 +78,11 @@ const Cultiv8VI = () => {
       price: 4.5,
       unit: "lb",
       quantity: 50,
-      image:
-        "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
+      image: "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
       category: "vegetables",
       inSeason: true,
       organic: true,
       harvestDate: "2024-08-25",
-    },
-    {
-      id: 2,
-      name: "Fresh Mangoes",
-      farmer: "Tropical Paradise Gardens",
-      location: "St. John",
-      price: 3.25,
-      unit: "lb",
-      quantity: 75,
-      image:
-        "https://images.unsplash.com/photo-1605027990121-cbae9ea5b4c4?w=300&h=200&fit=crop",
-      category: "fruits",
-      inSeason: true,
-      organic: false,
-      harvestDate: "2024-08-26",
-    },
-    {
-      id: 3,
-      name: "Caribbean Peppers",
-      farmer: "Island Fresh Produce",
-      location: "St. Croix",
-      price: 6.0,
-      unit: "lb",
-      quantity: 25,
-      image:
-        "https://images.unsplash.com/photo-1583201111945-2b9fc8b1bb66?w=300&h=200&fit=crop",
-      category: "vegetables",
-      inSeason: true,
-      organic: false,
-      harvestDate: "2024-08-24",
-    },
-    {
-      id: 4,
-      name: "Fresh Basil",
-      farmer: "Green Valley Farm",
-      location: "St. Thomas",
-      price: 8.0,
-      unit: "bunch",
-      quantity: 30,
-      image:
-        "https://images.unsplash.com/photo-1618375569909-3c8616cf7733?w=300&h=200&fit=crop",
-      category: "herbs",
-      inSeason: true,
-      organic: true,
-      harvestDate: "2024-08-27",
     },
   ];
 
@@ -180,14 +94,6 @@ const Cultiv8VI = () => {
     { id: "roots", name: "Root Vegetables", icon: "🥕" },
   ];
 
-  const filteredProduce = produce.filter((item) => {
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.farmer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
 
   const addToCart = (item: Produce) => {
     setCart([...cart, { ...item, cartId: Date.now() }]);
@@ -223,16 +129,15 @@ const Cultiv8VI = () => {
           setSelectedCategory={setSelectedCategory}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
-          filteredProduce={filteredProduce}
           addToCart={addToCart}
           cart={cart}
           removeFromCart={removeFromCart}
           categories={categories}
         />
       )}
-      {activeTab === "farmers" && <FarmersPage farmers={farmers} />}
+      {activeTab === "farmers" && <FarmersPage />}
       {activeTab === "dashboard" && userType === "farmer" && (
-        <FarmerDashboard produce={produce} />
+        <FarmerDashboard produce={sampleProduceForDashboard} />
       )}
 
       {/* Footer */}

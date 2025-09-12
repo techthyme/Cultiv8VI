@@ -6,8 +6,9 @@ import AddToCart from './AddToCart'
 interface Produce {
   id: number;
   name: string;
+  description?: string;
   farmer: string;
-  location: string;
+  farmerLocation: string;
   price: number;
   unit: string;
   quantity: number;
@@ -21,9 +22,10 @@ interface Produce {
 interface ProductCardProps {
   product: Produce;
   onAddToCart: (product: Produce) => void;
+  onViewDetails?: (product: Produce) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
       <div className="relative">
@@ -65,7 +67,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
         <div className="flex items-center text-sm text-gray-600 mb-2">
           <MapPin className="h-4 w-4 mr-1" />
           <span>
-            {product.farmer} • {product.location}
+            {product.farmer} • {product.farmerLocation}
           </span>
         </div>
 
@@ -78,7 +80,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
           </span>
         </div>
 
-        <AddToCart product={product} onAddToCart={onAddToCart} />
+        <div className="flex gap-2">
+          <AddToCart product={product} onAddToCart={onAddToCart} />
+          {onViewDetails && (
+            <button
+              onClick={() => onViewDetails(product)}
+              className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition duration-300 text-sm font-medium"
+            >
+              View Details
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

@@ -3,8 +3,9 @@ import React from 'react'
 interface Produce {
   id: number;
   name: string;
+  description?: string;
   farmer: string;
-  location: string;
+  farmerLocation: string;
   price: number;
   unit: string;
   quantity: number;

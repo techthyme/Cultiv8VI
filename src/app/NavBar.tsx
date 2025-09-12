@@ -11,6 +11,10 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+interface CartItem {
+  cartId: number;
+}
+
 interface NavBarProps {
   activeTab: string;
   setActiveTab: Dispatch<SetStateAction<string>>;
@@ -18,7 +22,7 @@ interface NavBarProps {
   setIsMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
   userType: string;
   setUserType: Dispatch<SetStateAction<string>>;
-  cart: any[];
+  cart: CartItem[];
   notifications: number;
 }
 
@@ -116,7 +120,7 @@ const NavBar: React.FC<NavBarProps> = ({
               </div>
               <div className="relative">
                 <ShoppingCart className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
-                {cart.length > 0 && (
+                {cart && cart.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {cart.length}
                   </span>
@@ -226,7 +230,7 @@ const NavBar: React.FC<NavBarProps> = ({
                   </div>
                   <div className="relative">
                     <ShoppingCart className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
-                    {cart.length > 0 && (
+                    {cart && cart.length > 0 && (
                       <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                         {cart.length}
                       </span>
