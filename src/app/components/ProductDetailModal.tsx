@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import {
   X,
   MapPin,
   Calendar,
   Package,
-  Award,
   Leaf,
   ShoppingCart,
 } from "lucide-react";
@@ -60,9 +60,11 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         >
           {/* Header */}
           <div className="relative">
-            <img
+            <Image
               src={product.image}
               alt={product.name}
+              width={800}
+              height={256}
               className="w-full h-64 object-cover rounded-t-lg"
             />
             <button

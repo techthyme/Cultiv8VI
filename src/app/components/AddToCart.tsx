@@ -3,7 +3,7 @@ import React from 'react'
 interface Produce {
   id: number;
   name: string;
-  description?: string;
+  description: string;
   farmer: string;
   farmerLocation: string;
   price: number;

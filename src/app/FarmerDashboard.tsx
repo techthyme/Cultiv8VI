@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import {
   Package,
   TrendingUp,
@@ -12,8 +13,9 @@ import {
 interface Produce {
   id: number;
   name: string;
+  description: string;
   farmer: string;
-  location: string;
+  farmerLocation: string;
   price: number;
   unit: string;
   quantity: number;
@@ -162,9 +164,11 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({ produce }) => {
               {produce.slice(0, 4).map((item) => (
                 <div key={item.id} className="p-6">
                   <div className="flex items-center space-x-4">
-                    <img
+                    <Image
                       src={item.image}
                       alt={item.name}
+                      width={48}
+                      height={48}
                       className="w-12 h-12 object-cover rounded-lg"
                     />
                     <div className="flex-1">

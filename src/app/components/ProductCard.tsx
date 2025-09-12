@@ -1,12 +1,13 @@
 
 import React from 'react'
+import Image from 'next/image'
 import { MapPin, Heart } from 'lucide-react'
 import AddToCart from './AddToCart'
 
 interface Produce {
   id: number;
   name: string;
-  description?: string;
+  description: string;
   farmer: string;
   farmerLocation: string;
   price: number;
@@ -29,9 +30,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
       <div className="relative">
-        <img
+        <Image
           src={product.image}
           alt={product.name}
+          width={400}
+          height={192}
           className="w-full h-48 object-cover"
         />
         <div className="absolute top-3 left-3 flex flex-col space-y-1">

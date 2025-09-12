@@ -29,8 +29,8 @@ interface ProductsFromFarmsResponse {
   error?: string;
 }
 
-// Fetcher function for SWR
-const fetcher = async (url: string): Promise<FarmsResponse | FarmResponse> => {
+// Fetcher function for farms list
+const farmsFetcher = async (url: string): Promise<FarmsResponse> => {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error('Failed to fetch farms data');
@@ -38,8 +38,17 @@ const fetcher = async (url: string): Promise<FarmsResponse | FarmResponse> => {
   return response.json();
 };
 
+// Fetcher function for single farm
+const farmFetcher = async (url: string): Promise<FarmResponse> => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Failed to fetch farm data');
+  }
+  return response.json();
+};
+
 // Fetcher for POST requests (products from farms)
-const postFetcher = async ([url, body]: [string, any]): Promise<ProductsFromFarmsResponse> => {
+const postFetcher = async ([url, body]: [string, object]): Promise<ProductsFromFarmsResponse> => {
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -81,7 +90,7 @@ export function useFarms(options: UseFarmsOptions = {}) {
   
   const { data, error, isLoading, mutate } = useSWR<FarmsResponse>(
     url,
-    fetcher,
+    farmsFetcher,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: true,
@@ -105,7 +114,7 @@ export function useFarms(options: UseFarmsOptions = {}) {
 export function useFarm(farmId: number) {
   const { data, error, isLoading, mutate } = useSWR<FarmResponse>(
     farmId ? `/api/farms?farmId=${farmId}` : null,
-    fetcher,
+    farmFetcher,
     {
       revalidateOnFocus: false,
       dedupingInterval: 300000, // 5 minutes for individual farms

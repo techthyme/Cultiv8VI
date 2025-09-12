@@ -1,28 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Search,
-  MapPin,
-  Star,
-  ShoppingCart,
-  User,
-  Menu,
-  X,
-  Bell,
-  Filter,
-  Truck,
-  Phone,
-  Mail,
-  Calendar,
-  Package,
-  TrendingUp,
-  Users,
   Leaf,
-  Award,
-  HelpCircle,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import ProductCard from "./components/ProductCard";
 import NavBar from "./NavBar";
 import HomePage from "./HomePage";
 import MarketplacePage from "./MarketplacePage";
@@ -33,9 +13,9 @@ import FarmerDashboard from "./FarmerDashboard";
 interface Produce {
   id: number;
   name: string;
-  description?: string;
+  description: string;
   farmer: string;
-  location: string;
+  farmerLocation: string;
   price: number;
   unit: string;
   quantity: number;
@@ -57,14 +37,13 @@ interface CartItem extends Produce {
 }
 
 const Cultiv8VI = () => {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userType, setUserType] = useState("business"); // 'farmer' or 'business'
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [notifications, setNotifications] = useState(3);
+  const [notifications] = useState(3);
   const [showFilters, setShowFilters] = useState(false);
 
 
@@ -73,8 +52,9 @@ const Cultiv8VI = () => {
     {
       id: 1,
       name: "Organic Tomatoes",
+      description: "Fresh, vine-ripened organic tomatoes grown in rich Virgin Islands soil. Perfect for salads, sauces, and cooking.",
       farmer: "Green Valley Farm",
-      location: "St. Thomas",
+      farmerLocation: "St. Thomas",
       price: 4.5,
       unit: "lb",
       quantity: 50,
