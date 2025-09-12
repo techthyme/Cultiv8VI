@@ -1,0 +1,20 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  FARMER
+  BUSINESS
+  ADMIN
+}
+
+model _SanityUser {
+  id   String @id @default(cuid())
+  role Role
+}
