@@ -66,3 +66,7 @@
 ## 📝 Notes
 
 <!-- Additional context for reviewers -->
+
+## Clean up
+
+Once this pr is approved and merged into the main branch ensure that old and completed branches are deleted and removed from the repository.

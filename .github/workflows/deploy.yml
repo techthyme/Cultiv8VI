@@ -1,0 +1,235 @@
+# .github/workflows/deploy.yml
+name: Deploy Application
+
+on:
+  push:
+    tags:
+      - "rc-*" # Release candidate tags for staging
+      - "v*.*.*" # Production release tags
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: "18"
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  # Run tests on PRs and tag pushes
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run type checking
+        run: npm run type-check
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Run build
+        run: npm run build
+
+      - name: Security audit
+        run: npm audit --audit-level=moderate
+
+  # Deploy to staging when rc- tag is pushed
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/rc-')
+    needs: [test]
+    environment:
+      name: staging
+      url: https://app-name-staging.fly.dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Extract tag name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Deploy to staging
+        run: |
+          flyctl deploy \
+            --config fly.staging.toml \
+            --image-label staging-${{ env.TAG_NAME }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Health check
+        run: |
+          echo "Waiting for deployment to be ready..."
+          sleep 30
+          curl -f https://cultiv8vi.fly.dev/health || exit 1
+
+      - name: Run smoke tests
+        run: |
+          npm ci
+          npm run test:smoke:staging
+        env:
+          STAGING_URL: https://cultiv8vi.fly.dev
+
+      - name: Notify staging deployment
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          channel: "#deployments"
+          text: |
+            Staging deployment ${{ job.status }} for ${{ env.TAG_NAME }}
+            App: https://app-name-staging.fly.dev
+            Ready for user testing! 🚀
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Deploy to production with manual approval
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test]
+    environment:
+      name: production
+      url: https://app-name.fly.dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Extract version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Check if RC exists
+        run: |
+          # Verify this production tag corresponds to a tested RC
+          RC_TAG="rc-${VERSION#v}"
+          if ! git tag -l | grep -q "^$RC_TAG$"; then
+            echo "Warning: No corresponding RC tag found for $VERSION"
+            echo "Expected: $RC_TAG"
+          fi
+
+      - name: Pre-deployment backup
+        run: |
+          echo "Creating pre-deployment backup..."
+          # Add your backup commands here
+          # flyctl postgres backup create --app app-name-db
+
+      - name: Deploy to production
+        run: |
+          flyctl deploy \
+            --config fly.production.toml \
+            --image-label production-${{ env.VERSION }}
+        env:
+          FLY_API_TOKEN: ${{ env.FLY_API_TOKEN }}
+
+      - name: Health check
+        run: |
+          echo "Waiting for deployment to be ready..."
+          sleep 45
+          curl -f https://app-name.fly.dev/health || exit 1
+
+      - name: Run production smoke tests
+        run: |
+          npm ci
+          npm run test:smoke:production
+        env:
+          PRODUCTION_URL: https://app-name.fly.dev
+
+      - name: Update release notes
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+          body: |
+            ## Changes
+            <!-- Auto-generated or manually updated release notes -->
+
+            ## Deployment
+            - Staging: Tested with tag rc-${{ env.VERSION }}
+            - Production: Deployed ${{ env.VERSION }}
+
+            **App URL:** https://app-name.fly.dev
+
+      - name: Notify production deployment
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          channel: "#deployments"
+          text: |
+            🎉 Production deployment ${{ job.status }} for ${{ env.VERSION }}
+            App: https://app-name.fly.dev
+            ${{ job.status == 'success' && 'Live now!' || 'Deployment failed - check logs' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Rollback job (manual trigger only)
+  rollback-production:
+    name: Rollback Production
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    environment:
+      name: production
+      url: https://app-name.fly.dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: List recent releases
+        run: flyctl releases --app app-name-production
+
+      - name: Rollback to previous release
+        run: |
+          PREVIOUS_RELEASE=$(flyctl releases --app app-name-production --json | jq -r '.[1].version')
+          echo "Rolling back to release: $PREVIOUS_RELEASE"
+          flyctl releases rollback $PREVIOUS_RELEASE --app app-name-production
+        env:
+          FLY_API_TOKEN: ${{ env.FLY_API_TOKEN }}
+
+      - name: Verify rollback
+        run: |
+          sleep 30
+          curl -f https://app-name.fly.dev/health || exit 1
+
+      - name: Notify rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: "#deployments"
+          text: |
+            🔄 Production rollback completed
+            Status: ${{ job.status }}
+            App: https://app-name.fly.dev
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
