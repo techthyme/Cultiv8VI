@@ -76,6 +76,12 @@ const NavBar: React.FC<NavBarProps> = ({
               >
                 Farmers
               </button>
+              <button
+                onClick={() => router.push("/about")}
+                className="px-3 py-2 rounded transition hover:bg-green-500"
+              >
+                About Us
+              </button>
               {userType === "farmer" && (
                 <button
                   onClick={() => setActiveTab("dashboard")}
@@ -182,6 +188,15 @@ const NavBar: React.FC<NavBarProps> = ({
                 }`}
               >
                 Farmers
+              </button>
+              <button
+                onClick={() => {
+                  router.push("/about");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-left px-3 py-2 rounded transition hover:bg-green-500"
+              >
+                About Us
               </button>
               {userType === "farmer" && (
                 <button
