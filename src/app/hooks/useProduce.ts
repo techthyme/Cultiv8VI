@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Produce } from '../api/produce/route';
+import { Produce } from '../types';
 
 interface UseProduceOptions {
   category?: string;

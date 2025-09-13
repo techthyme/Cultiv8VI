@@ -10,22 +10,7 @@ import {
 import ProductCard from "./components/ProductCard";
 import ProductDetailModal from "./components/ProductDetailModal";
 import { useProductsFromFarms } from "./hooks/useFarms";
-
-interface Produce {
-  id: number;
-  name: string;
-  description: string;
-  farmer: string;
-  farmerLocation: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  category: string;
-  inSeason: boolean;
-  organic: boolean;
-  harvestDate: string;
-}
+import { Produce } from "./types";
 
 interface Category {
   id: string;

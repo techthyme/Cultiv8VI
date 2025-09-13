@@ -1,20 +1,5 @@
 import { NextResponse } from 'next/server';
-
-export interface Produce {
-  id: number;
-  name: string;
-  description: string;
-  farmer: string;
-  location: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  category: string;
-  inSeason: boolean;
-  organic: boolean;
-  harvestDate: string;
-}
+import { Produce } from '../../types';
 
 // Sample produce data - this would typically come from a database
 const produceData: Produce[] = [
@@ -23,7 +8,7 @@ const produceData: Produce[] = [
     name: "Organic Tomatoes",
     description: "Fresh, juicy organic tomatoes grown in Virgin Islands soil. Perfect for salads, cooking, and sauces. Hand-picked at peak ripeness.",
     farmer: "Green Valley Farm",
-    location: "St. Thomas",
+    farmerLocation: "St. Thomas",
     price: 4.5,
     unit: "lb",
     quantity: 50,
@@ -38,7 +23,7 @@ const produceData: Produce[] = [
     name: "Fresh Mangoes",
     description: "Sweet, tropical mangoes bursting with flavor. Locally grown in the Virgin Islands with no pesticides. Ready to eat or perfect for smoothies.",
     farmer: "Tropical Paradise Gardens",
-    location: "St. John",
+    farmerLocation: "St. John",
     price: 3.25,
     unit: "lb",
     quantity: 75,
@@ -53,7 +38,7 @@ const produceData: Produce[] = [
     name: "Caribbean Peppers",
     description: "Spicy Caribbean peppers with authentic island heat. Grown using traditional methods. Perfect for adding kick to your dishes.",
     farmer: "Island Fresh Produce",
-    location: "St. Croix",
+    farmerLocation: "St. Croix",
     price: 6.0,
     unit: "lb",
     quantity: 25,
@@ -68,7 +53,7 @@ const produceData: Produce[] = [
     name: "Fresh Basil",
     description: "Aromatic organic basil grown in greenhouse conditions. Perfect for Italian dishes, pesto, and garnishes. Picked daily for maximum freshness.",
     farmer: "Green Valley Farm",
-    location: "St. Thomas",
+    farmerLocation: "St. Thomas",
     price: 8.0,
     unit: "bunch",
     quantity: 30,
@@ -83,7 +68,7 @@ const produceData: Produce[] = [
     name: "Coconuts",
     description: "Fresh coconuts harvested daily from our coastal groves. Perfect for drinking or cooking. Rich in natural electrolytes and flavor.",
     farmer: "Tropical Paradise Gardens",
-    location: "St. John",
+    farmerLocation: "St. John",
     price: 2.5,
     unit: "each",
     quantity: 40,
@@ -98,7 +83,7 @@ const produceData: Produce[] = [
     name: "Sweet Plantains",
     description: "Ripe, sweet plantains perfect for frying or baking. A Caribbean staple that's versatile and delicious. Naturally sweet and nutritious.",
     farmer: "Island Fresh Produce",
-    location: "St. Croix",
+    farmerLocation: "St. Croix",
     price: 3.75,
     unit: "lb",
     quantity: 60,
@@ -136,7 +121,7 @@ export async function GET(request: Request) {
 
     // Filter by location
     if (location && location !== 'all') {
-      filteredProduce = filteredProduce.filter(item => item.location === location);
+      filteredProduce = filteredProduce.filter(item => item.farmerLocation === location);
     }
 
     // Simulate API delay (remove in production)

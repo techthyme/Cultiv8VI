@@ -8,23 +8,7 @@ import HomePage from "./HomePage";
 import MarketplacePage from "./MarketplacePage";
 import FarmersPage from "./FarmersPage";
 import FarmerDashboard from "./FarmerDashboard";
-
-
-interface Produce {
-  id: number;
-  name: string;
-  description: string;
-  farmer: string;
-  farmerLocation: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  category: string;
-  inSeason: boolean;
-  organic: boolean;
-  harvestDate: string;
-}
+import { Produce } from "./types";
 
 interface Category {
   id: string;
@@ -43,7 +27,7 @@ const Cultiv8VI = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [notifications] = useState(3);
+  const [notifications, setNotifications] = useState(3);
   const [showFilters, setShowFilters] = useState(false);
 
 
