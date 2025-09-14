@@ -1,23 +1,8 @@
 
 import React from 'react'
+import Image from 'next/image'
 import { MapPin, Heart } from 'lucide-react'
-import AddToCart from './AddToCart'
-
-interface Produce {
-  id: number;
-  name: string;
-  description?: string;
-  farmer: string;
-  farmerLocation: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  category: string;
-  inSeason: boolean;
-  organic: boolean;
-  harvestDate: string;
-}
+import { Produce } from '../types'
 
 interface ProductCardProps {
   product: Produce;
@@ -29,9 +14,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
       <div className="relative">
-        <img
+        <Image
           src={product.image}
           alt={product.name}
+          width={400}
+          height={192}
           className="w-full h-48 object-cover"
         />
         <div className="absolute top-3 left-3 flex flex-col space-y-1">
@@ -81,7 +68,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         </div>
 
         <div className="flex gap-2">
-          <AddToCart product={product} onAddToCart={onAddToCart} />
+          <button
+            onClick={() => onAddToCart(product)}
+            className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 font-medium"
+          >
+            Add to Cart
+          </button>
           {onViewDetails && (
             <button
               onClick={() => onViewDetails(product)}
