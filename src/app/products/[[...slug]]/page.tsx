@@ -5,7 +5,7 @@ interface Props {
 }
 
 
-const ProductPage = ({params: {slug}}: Props) => {
+const ProductPage = ({}: Props) => {
   return (
     <div>ProductPage</div>
   )

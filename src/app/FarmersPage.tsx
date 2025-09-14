@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import {
   MapPin,
   Star,
@@ -12,7 +13,7 @@ import { useFarms } from "./hooks/useFarms";
 
 const FarmersPage: React.FC = () => {
   // Fetch farms data
-  const { farms, total, isLoading, isError } = useFarms();
+  const { farms, isLoading, isError } = useFarms();
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -59,9 +60,11 @@ const FarmersPage: React.FC = () => {
                 key={farm.id}
                 className="bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden"
               >
-                <img
+                <Image
                   src={farm.image}
                   alt={farm.name}
+                  width={400}
+                  height={192}
                   className="w-full h-48 object-cover"
                 />
 

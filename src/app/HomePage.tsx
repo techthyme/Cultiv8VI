@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import {
   ShoppingCart,
   Leaf,
@@ -19,10 +20,11 @@ const HomePage: React.FC<HomePageProps> = ({ setActiveTab }) => {
       <div className="relative min-h-screen bg-gradient-to-br from-green-600 via-green-700 to-green-900 text-white overflow-hidden">
         {/* Background Image Overlay */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1920&h=1080&fit=crop"
             alt="Virgin Islands Farm"
-            className="w-full h-full object-cover opacity-20"
+            fill
+            className="object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-green-600/80 via-green-700/80 to-green-900/80"></div>
         </div>

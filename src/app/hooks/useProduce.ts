@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Produce } from '../api/produce/route';
+import { Produce } from '../types';
 
 interface UseProduceOptions {
   category?: string;
@@ -73,7 +73,7 @@ export function useProduce(options: UseProduceOptions = {}) {
 export function useProduceItem(id: number) {
   const { data, error, isLoading, mutate } = useSWR<{ success: boolean; data: Produce }>(
     id ? `/api/produce/${id}` : null,
-    async (url: string) => {
+    async () => {
       const response = await fetch('/api/produce', {
         method: 'POST',
         headers: {
