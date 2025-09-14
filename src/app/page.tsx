@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Leaf,
@@ -21,8 +21,20 @@ interface CartItem extends Produce {
   cartId: number;
 }
 
-const Cultiv8VI = () => {
+const SearchParamsHandler = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const tabParam = searchParams.get('activeTab');
+    if (tabParam && ['home', 'marketplace', 'farmers', 'dashboard'].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams, setActiveTab]);
+
+  return null;
+};
+
+const Cultiv8VI = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userType, setUserType] = useState("business"); // 'farmer' or 'business'
@@ -31,14 +43,6 @@ const Cultiv8VI = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [notifications, setNotifications] = useState(3);
   const [showFilters, setShowFilters] = useState(false);
-
-  // Handle URL parameters for navigation from About page
-  useEffect(() => {
-    const tabParam = searchParams.get('activeTab');
-    if (tabParam && ['home', 'marketplace', 'farmers', 'dashboard'].includes(tabParam)) {
-      setActiveTab(tabParam);
-    }
-  }, [searchParams]);
 
 
   // Sample produce for farmer dashboard - in real app this would come from user's products
@@ -84,6 +88,9 @@ const Cultiv8VI = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Suspense fallback={null}>
+        <SearchParamsHandler setActiveTab={setActiveTab} />
+      </Suspense>
       <NavBar
         activeTab={activeTab}
         setActiveTab={setActiveTab}

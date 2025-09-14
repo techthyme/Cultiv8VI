@@ -5,17 +5,17 @@ import NavBar from "../NavBar";
 
 const AboutPage = () => {
   const router = useRouter();
-  const activeTab = "about";
+  const [activeTab, setActiveTab] = useState("about");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userType, setUserType] = useState("business");
-  const cart = [];
-  const notifications = 3;
+  const [cart] = useState([]);
+  const [notifications] = useState(3);
 
   // Handle navbar navigation
   const handleNavigation = (tab: string | ((prevState: string) => string)) => {
     const tabValue = typeof tab === 'function' ? tab(activeTab) : tab;
     if (tabValue === "about") {
-      // Already on about page, no action needed
+      setActiveTab("about");
     } else if (tabValue === "home") {
       router.push("/");
     } else if (tabValue === "marketplace") {
@@ -199,7 +199,7 @@ const TestimonialSection = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-gray-600 mb-6 italic">"{testimonial.quote}"</p>
+              <p className="text-gray-600 mb-6 italic">{testimonial.quote}</p>
               <div className="flex items-center">
                 <img
                   src={testimonial.avatar}
@@ -228,8 +228,8 @@ const CtaSection = () => {
           Ready to Join Our Community?
         </h2>
         <p className="text-lg text-green-100 mb-8 max-w-2xl mx-auto">
-          Whether you're a farmer looking to reach new markets or a business seeking 
-          fresh, local produce, we're here to connect you.
+          Whether you&apos;re a farmer looking to reach new markets or a business seeking 
+          fresh, local produce, we&apos;re here to connect you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
