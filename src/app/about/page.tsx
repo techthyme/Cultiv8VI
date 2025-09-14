@@ -10,8 +10,8 @@ const AboutPage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userType, setUserType] = useState("business");
   const [cart] = useState([]);
-  const [notifications] = useState(3);
 
+  const notificationsCount = 2;
   // Handle navbar navigation
   const handleNavigation = (tab: string | ((prevState: string) => string)) => {
     const tabValue = typeof tab === "function" ? tab(activeTab) : tab;
@@ -44,7 +44,7 @@ const AboutPage = () => {
         userType={userType}
         setUserType={setUserType}
         cart={cart}
-        notifications={notifications}
+        notificationsCount={notificationsCount}
       />
 
       {/* About Section */}
