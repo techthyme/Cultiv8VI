@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Farm, Product } from '../api/farms/route';
+import { Farm, Product } from '@/types';
 
 interface UseFarmsOptions {
   location?: string;

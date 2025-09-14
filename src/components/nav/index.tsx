@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
 import {
   Bell,
   ShoppingCart,
@@ -10,33 +10,48 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-interface CartItem {
-  cartId: number;
-}
+import { useCart } from "@/context/cart";
 
 interface NavBarProps {
-  activeTab: string;
-  setActiveTab: Dispatch<SetStateAction<string>>;
-  isMobileMenuOpen: boolean;
-  setIsMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
-  userType: string;
-  setUserType: Dispatch<SetStateAction<string>>;
-  cart: CartItem[];
-  notificationsCount: number;
+  nothing?: null;
 }
 
-const NavBar: React.FC<NavBarProps> = ({
-  activeTab,
-  setActiveTab,
-  isMobileMenuOpen,
-  setIsMobileMenuOpen,
-  userType,
-  setUserType,
-  cart,
-  notificationsCount,
-}) => {
+const NavBar: React.FC<NavBarProps> = ({}) => {
+  const {
+    state: { products },
+  } = useCart();
   const router = useRouter();
+  const userType: "customer" | "farmer" = "farmer";
+  // FIXME: Need to implement a notifications context
+  const notificationsCount = 3;
+
+  const [activeTab, setActiveTab] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [selectedCategory, setSelectedCategory] = useState("all");
+  // const [showFilters, setShowFilters] = useState(false);
+
+  // Handle navbar navigation
+  // const handleNavigation = (tab: string | ((prevState: string) => string)) => {
+  //   const tabValue = typeof tab === "function" ? tab(activeTab) : tab;
+  //   if (tabValue === "about") {
+  //     setActiveTab("about");
+  //   } else if (tabValue === "home") {
+  //     router.push("/");
+  //   } else if (tabValue === "marketplace") {
+  //     // Navigate to main app and set marketplace tab
+  //     router.push("/?activeTab=marketplace");
+  //   } else if (tabValue === "farmers") {
+  //     // Navigate to main app and set farmers tab
+  //     router.push("/?activeTab=farmers");
+  //   } else if (tabValue === "dashboard") {
+  //     // Navigate to main app and set dashboard tab
+  //     router.push("/?activeTab=dashboard");
+  //   } else {
+  //     // Default navigation to main app
+  //     router.push("/");
+  //   }
+  // };
 
   return (
     <nav className="bg-green-600 text-white shadow-lg sticky top-0 z-50">
@@ -110,7 +125,12 @@ const NavBar: React.FC<NavBarProps> = ({
             <div className="hidden md:flex items-center space-x-4">
               <select
                 value={userType}
-                onChange={(e) => setUserType(e.target.value)}
+                onChange={(e) =>
+                  console.log(
+                    `need to implement the switching to a ${e.target.value}`
+                  )
+                }
+                // onChange={(e) => setUserType(e.target.value)}
                 className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 <option value="business">Business</option>
@@ -126,9 +146,9 @@ const NavBar: React.FC<NavBarProps> = ({
               </div>
               <div className="relative">
                 <ShoppingCart className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
-                {cart && cart.length > 0 && (
+                {products.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cart.length}
+                    {products.length}
                   </span>
                 )}
               </div>
@@ -228,7 +248,12 @@ const NavBar: React.FC<NavBarProps> = ({
               <div className="flex items-center justify-between pt-2 border-t border-green-500 mt-2">
                 <select
                   value={userType}
-                  onChange={(e) => setUserType(e.target.value)}
+                  //   onChange={(e) => setUserType(e.target.value)}
+                  onChange={(e) =>
+                    console.log(
+                      `need to implement setUserType(e.target.value) when switching to ${e.target.value}`
+                    )
+                  }
                   className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                 >
                   <option value="business">Business</option>
@@ -245,9 +270,9 @@ const NavBar: React.FC<NavBarProps> = ({
                   </div>
                   <div className="relative">
                     <ShoppingCart className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
-                    {cart && cart.length > 0 && (
+                    {products.length > 0 && (
                       <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {cart.length}
+                        {products.length}
                       </span>
                     )}
                   </div>

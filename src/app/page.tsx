@@ -2,22 +2,11 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Leaf } from "lucide-react";
-import NavBar from "./NavBar";
 import HomePage from "./HomePage";
 import MarketplacePage from "./MarketplacePage";
 import FarmersPage from "./FarmersPage";
-import FarmerDashboard from "./FarmerDashboard";
-import { Produce } from "./types";
-
-interface Category {
-  id: string;
-  name: string;
-  icon: string;
-}
-
-interface CartItem extends Produce {
-  cartId: number;
-}
+import FarmerDashboard from "./dashboard/page";
+import { Product, ProductCategory } from "@/types";
 
 const SearchParamsHandler = ({
   setActiveTab,
@@ -40,23 +29,21 @@ const SearchParamsHandler = ({
 };
 
 const Cultiv8VI = () => {
+  // const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userType, setUserType] = useState("business"); // 'farmer' or 'business'
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
-  // FIXME: temp place holder. This value needs to either be imported of handed by
-  // local state.
-  const notificationsCount = 3;
+  // FIXME: need to get this from the auth context
+  const userType = "farmer";
   //******* */
 
   // Sample produce for farmer dashboard - in real app this would come from user's products
-  const sampleProduceForDashboard: Produce[] = [
+  const sampleProductsForDashboard: Product[] = [
     {
-      id: 1,
+      id: "1",
+      farm_id: "1",
       name: "Organic Tomatoes",
       description:
         "Fresh, vine-ripened organic tomatoes grown in rich Virgin Islands soil. Perfect for salads, sauces, and cooking.",
@@ -67,44 +54,19 @@ const Cultiv8VI = () => {
       quantity: 50,
       image:
         "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
-      category: "vegetables",
+      category: ProductCategory.vegetables,
       inSeason: true,
       organic: true,
       harvestDate: "2024-08-25",
     },
   ];
 
-  const categories: Category[] = [
-    { id: "all", name: "All Products", icon: "🌱" },
-    { id: "vegetables", name: "Vegetables", icon: "🥬" },
-    { id: "fruits", name: "Fruits", icon: "🥭" },
-    { id: "herbs", name: "Herbs", icon: "🌿" },
-    { id: "roots", name: "Root Vegetables", icon: "🥕" },
-  ];
-
-  const addToCart = (item: Produce) => {
-    setCart([...cart, { ...item, cartId: Date.now() }]);
-  };
-
-  const removeFromCart = (cartId: number) => {
-    setCart(cart.filter((item) => item.cartId !== cartId));
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Suspense fallback={null}>
         <SearchParamsHandler setActiveTab={setActiveTab} />
       </Suspense>
-      <NavBar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-        userType={userType}
-        setUserType={setUserType}
-        cart={cart}
-        notificationsCount={notificationsCount}
-      />
+
       {activeTab === "home" && <HomePage setActiveTab={setActiveTab} />}
       {activeTab === "marketplace" && (
         <MarketplacePage
@@ -114,15 +76,11 @@ const Cultiv8VI = () => {
           setSelectedCategory={setSelectedCategory}
           showFilters={showFilters}
           setShowFilters={setShowFilters}
-          addToCart={addToCart}
-          cart={cart}
-          removeFromCart={removeFromCart}
-          categories={categories}
         />
       )}
       {activeTab === "farmers" && <FarmersPage />}
       {activeTab === "dashboard" && userType === "farmer" && (
-        <FarmerDashboard produce={sampleProduceForDashboard} />
+        <FarmerDashboard products={sampleProductsForDashboard} />
       )}
 
       {/* Footer */}

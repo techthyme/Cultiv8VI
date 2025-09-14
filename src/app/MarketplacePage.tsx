@@ -1,25 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Search,
-  Filter,
-  ShoppingCart,
-  Loader,
-  X,
-} from "lucide-react";
-import ProductCard from "./components/ProductCard";
-import ProductDetailModal from "./components/ProductDetailModal";
-import { useProductsFromFarms } from "./hooks/useFarms";
-import { Produce } from "./types";
+import { Search, Filter, ShoppingCart, Loader, X } from "lucide-react";
+import ProductCard from "../components/card";
+import ProductDetailModal from "../components/modal";
+import { useProductsFromFarms } from "@/hooks/useFarms";
+import { Product } from "@/types";
+import { useCart } from "@/context/cart";
 
 interface Category {
   id: string;
   name: string;
   icon: string;
-}
-
-interface CartItem extends Produce {
-  cartId: number;
 }
 
 interface MarketplacePageProps {
@@ -29,10 +20,6 @@ interface MarketplacePageProps {
   setSelectedCategory: (category: string) => void;
   showFilters: boolean;
   setShowFilters: (show: boolean) => void;
-  addToCart: (item: Produce) => void;
-  cart: CartItem[];
-  removeFromCart: (cartId: number) => void;
-  categories: Category[];
 }
 
 const MarketplacePage: React.FC<MarketplacePageProps> = ({
@@ -42,16 +29,17 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
   setSelectedCategory,
   showFilters,
   setShowFilters,
-  addToCart,
-  cart,
-  removeFromCart,
-  categories,
 }) => {
+  const {
+    // state: { products: productsInCart },
+    addItemToCart,
+    removeItemFromCart,
+  } = useCart();
   // Local state for cart visibility
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   // Product detail modal state
-  const [selectedProduct, setSelectedProduct] = useState<Produce | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   // Fetch products from farms with current filters
@@ -61,13 +49,13 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
   });
 
   // Wrapper function to add to cart and open cart popup
-  const handleAddToCart = (item: Produce) => {
-    addToCart(item);
+  const handleAddToCart = (item: Product) => {
+    addItemToCart(item);
     setIsCartOpen(true);
   };
 
   // Function to open product detail modal
-  const handleViewDetails = (product: Produce) => {
+  const handleViewDetails = (product: Product) => {
     setSelectedProduct(product);
     setIsDetailModalOpen(true);
   };
@@ -77,6 +65,15 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
     setIsDetailModalOpen(false);
     setSelectedProduct(null);
   };
+
+  const categories: Category[] = [
+    { id: "all", name: "All Products", icon: "🌱" },
+    { id: "vegetables", name: "Vegetables", icon: "🥬" },
+    { id: "fruits", name: "Fruits", icon: "🥭" },
+    { id: "herbs", name: "Herbs", icon: "🌿" },
+    { id: "roots", name: "Root Vegetables", icon: "🥕" },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -230,7 +227,7 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
       </div>
 
       {/* Floating Cart Button */}
-      {cart.length > 0 && !isCartOpen && (
+      {products.length > 0 && !isCartOpen && (
         <div className="fixed bottom-4 right-4">
           <button
             onClick={() => setIsCartOpen(true)}
@@ -239,7 +236,7 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
             <div className="relative">
               <ShoppingCart className="h-6 w-6" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {cart.length}
+                {products.length}
               </span>
             </div>
           </button>
@@ -247,10 +244,10 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
       )}
 
       {/* Shopping Cart Sidebar */}
-      {cart.length > 0 && isCartOpen && (
+      {products.length > 0 && isCartOpen && (
         <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-xl p-4 max-w-sm w-full mx-4 border border-gray-200 z-50">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold">Cart ({cart.length})</h3>
+            <h3 className="font-semibold">Cart ({products.length})</h3>
             <button
               onClick={() => setIsCartOpen(false)}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -259,16 +256,16 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
             </button>
           </div>
           <div className="max-h-40 overflow-y-auto space-y-2">
-            {cart.map((item) => (
+            {products.map((product) => (
               <div
-                key={item.cartId}
+                key={product.cart_id}
                 className="flex items-center justify-between text-sm"
               >
-                <span className="truncate">{item.name}</span>
+                <span className="truncate">{product.name}</span>
                 <div className="flex items-center space-x-2">
-                  <span className="font-medium">${item.price}</span>
+                  <span className="font-medium">${product.price}</span>
                   <button
-                    onClick={() => removeFromCart(item.cartId)}
+                    onClick={() => removeItemFromCart(product.cart_id!)}
                     className="text-red-500 hover:text-red-700"
                   >
                     ×
@@ -281,7 +278,10 @@ const MarketplacePage: React.FC<MarketplacePageProps> = ({
             <div className="flex justify-between font-semibold">
               <span>Total:</span>
               <span>
-                ${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}
+                $
+                {products
+                  .reduce((sum, product) => sum + product.price, 0)
+                  .toFixed(2)}
               </span>
             </div>
             <button className="w-full mt-2 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">

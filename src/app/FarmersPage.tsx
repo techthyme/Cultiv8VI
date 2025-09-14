@@ -1,15 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import {
-  MapPin,
-  Star,
-  Phone,
-  Mail,
-  Award,
-  Loader,
-} from "lucide-react";
-import { useFarms } from "./hooks/useFarms";
+import { MapPin, Star, Phone, Mail, Award, Loader } from "lucide-react";
+import { useFarms } from "@/hooks/useFarms";
 
 const FarmersPage: React.FC = () => {
   // Fetch farms data
@@ -137,15 +130,15 @@ const FarmersPage: React.FC = () => {
                     <button className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 text-sm font-medium">
                       View Products ({farm.products?.length || 0})
                     </button>
-                    <button 
+                    <button
                       className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-300"
-                      title={`Call ${farm.contact?.phone || 'farm'}`}
+                      title={`Call ${farm.contact?.phone || "farm"}`}
                     >
                       <Phone className="h-4 w-4" />
                     </button>
-                    <button 
+                    <button
                       className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-300"
-                      title={`Email ${farm.contact?.email || 'farm'}`}
+                      title={`Email ${farm.contact?.email || "farm"}`}
                     >
                       <Mail className="h-4 w-4" />
                     </button>

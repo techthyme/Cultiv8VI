@@ -1,30 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import {
-  X,
-  MapPin,
-  Calendar,
-  Package,
-  Leaf,
-  ShoppingCart,
-} from "lucide-react";
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  farmer: string;
-  farmerLocation: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  category: string;
-  inSeason: boolean;
-  organic: boolean;
-  harvestDate: string;
-}
+import { X, MapPin, Calendar, Package, Leaf, ShoppingCart } from "lucide-react";
+import { Product } from "@/types";
 
 interface ProductDetailModalProps {
   product: Product;
@@ -49,12 +27,12 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   return (
     <>
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         {/* Modal Content */}
-        <div 
+        <div
           className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
@@ -73,7 +51,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             >
               <X className="h-5 w-5" />
             </button>
-            
+
             {/* Status Badges */}
             <div className="absolute top-4 left-4 flex flex-col gap-2">
               {product.organic && (
@@ -100,7 +78,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </h2>
                 <div className="flex items-center text-gray-600 mb-2">
                   <MapPin className="h-4 w-4 mr-1" />
-                  <span>{product.farmer} • {product.farmerLocation}</span>
+                  {/* FIXME: handle the farm location value */}
+                  <span>{product.farmer} • product.farmerLocation</span>
                 </div>
               </div>
               <div className="text-right">
@@ -126,7 +105,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center mb-2">
                   <Package className="h-4 w-4 mr-2 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">Availability</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Availability
+                  </span>
                 </div>
                 <div className="text-lg font-semibold text-gray-900">
                   {product.quantity} {product.unit}s
@@ -137,7 +118,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center mb-2">
                   <Calendar className="h-4 w-4 mr-2 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">Harvest Date</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Harvest Date
+                  </span>
                 </div>
                 <div className="text-lg font-semibold text-gray-900">
                   {new Date(product.harvestDate).toLocaleDateString()}

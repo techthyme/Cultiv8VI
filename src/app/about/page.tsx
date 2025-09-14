@@ -1,52 +1,9 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import NavBar from "../NavBar";
 import Image from "next/image";
 
 const AboutPage = () => {
-  const router = useRouter();
-  const [activeTab, setActiveTab] = useState("about");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userType, setUserType] = useState("business");
-  const [cart] = useState([]);
-
-  const notificationsCount = 2;
-  // Handle navbar navigation
-  const handleNavigation = (tab: string | ((prevState: string) => string)) => {
-    const tabValue = typeof tab === "function" ? tab(activeTab) : tab;
-    if (tabValue === "about") {
-      setActiveTab("about");
-    } else if (tabValue === "home") {
-      router.push("/");
-    } else if (tabValue === "marketplace") {
-      // Navigate to main app and set marketplace tab
-      router.push("/?activeTab=marketplace");
-    } else if (tabValue === "farmers") {
-      // Navigate to main app and set farmers tab
-      router.push("/?activeTab=farmers");
-    } else if (tabValue === "dashboard") {
-      // Navigate to main app and set dashboard tab
-      router.push("/?activeTab=dashboard");
-    } else {
-      // Default navigation to main app
-      router.push("/");
-    }
-  };
-
   return (
     <div className="bg-white">
-      <NavBar
-        activeTab={activeTab}
-        setActiveTab={handleNavigation}
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-        userType={userType}
-        setUserType={setUserType}
-        cart={cart}
-        notificationsCount={notificationsCount}
-      />
-
       {/* About Section */}
       <About />
 
