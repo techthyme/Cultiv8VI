@@ -1,6 +1,6 @@
 // prisma/seed.ts
 import { randomUUID } from 'crypto'
-import { PrismaClient, Role, AvailabilityLevel, SupportType } from '@prisma/client'
+import { PrismaClient, AvailabilityLevel, SupportType } from '@prisma/client'
 
 
 const prisma = new PrismaClient()
@@ -69,7 +69,7 @@ async function main() {
         categoryId: 'vegetables',
         inSeason: true,
         organic: true,
-        harvestDate: new Date('2024-08-25') as any,
+        harvestDate: new Date('2024-08-25'),
       },
       {
         id: randomUUID(),
@@ -83,7 +83,7 @@ async function main() {
         categoryId: 'fruits',
         inSeason: true,
         organic: false,
-        harvestDate: new Date('2024-08-26') as any,
+        harvestDate: new Date('2024-08-26'),
       },
       {
         id: randomUUID(),
@@ -97,7 +97,7 @@ async function main() {
         categoryId: 'vegetables',
         inSeason: true,
         organic: false,
-        harvestDate: new Date('2024-08-24') as any,
+        harvestDate: new Date('2024-08-24'),
       },
       {
         id: randomUUID(),
@@ -111,7 +111,7 @@ async function main() {
         categoryId: 'herbs',
         inSeason: true,
         organic: true,
-        harvestDate: new Date('2024-08-27') as any,
+        harvestDate: new Date('2024-08-27'),
       },
     ],
   })
