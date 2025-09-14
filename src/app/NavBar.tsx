@@ -23,7 +23,7 @@ interface NavBarProps {
   userType: string;
   setUserType: Dispatch<SetStateAction<string>>;
   cart: CartItem[];
-  notifications: number;
+  notificationsCount: number;
 }
 
 const NavBar: React.FC<NavBarProps> = ({
@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = ({
   userType,
   setUserType,
   cart,
-  notifications,
+  notificationsCount,
 }) => {
   const router = useRouter();
 
@@ -118,9 +118,9 @@ const NavBar: React.FC<NavBarProps> = ({
               </select>
               <div className="relative">
                 <Bell className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
-                {notifications > 0 && (
+                {notificationsCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {notifications}
+                    {notificationsCount}
                   </span>
                 )}
               </div>
@@ -237,9 +237,9 @@ const NavBar: React.FC<NavBarProps> = ({
                 <div className="flex items-center space-x-4">
                   <div className="relative">
                     <Bell className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
-                    {notifications > 0 && (
+                    {notificationsCount > 0 && (
                       <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {notifications}
+                        {notificationsCount}
                       </span>
                     )}
                   </div>

@@ -1,9 +1,7 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  Leaf,
-} from "lucide-react";
+import { Leaf } from "lucide-react";
 import NavBar from "./NavBar";
 import HomePage from "./HomePage";
 import MarketplacePage from "./MarketplacePage";
@@ -21,12 +19,19 @@ interface CartItem extends Produce {
   cartId: number;
 }
 
-const SearchParamsHandler = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
+const SearchParamsHandler = ({
+  setActiveTab,
+}: {
+  setActiveTab: (tab: string) => void;
+}) => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const tabParam = searchParams.get('activeTab');
-    if (tabParam && ['home', 'marketplace', 'farmers', 'dashboard'].includes(tabParam)) {
+    const tabParam = searchParams.get("activeTab");
+    if (
+      tabParam &&
+      ["home", "marketplace", "farmers", "dashboard"].includes(tabParam)
+    ) {
       setActiveTab(tabParam);
     }
   }, [searchParams, setActiveTab]);
@@ -41,22 +46,27 @@ const Cultiv8VI = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [notifications, setNotifications] = useState(3);
   const [showFilters, setShowFilters] = useState(false);
 
+  // FIXME: temp place holder. This value needs to either be imported of handed by
+  // local state.
+  const notificationsCount = 3;
+  //******* */
 
   // Sample produce for farmer dashboard - in real app this would come from user's products
   const sampleProduceForDashboard: Produce[] = [
     {
       id: 1,
       name: "Organic Tomatoes",
-      description: "Fresh, vine-ripened organic tomatoes grown in rich Virgin Islands soil. Perfect for salads, sauces, and cooking.",
+      description:
+        "Fresh, vine-ripened organic tomatoes grown in rich Virgin Islands soil. Perfect for salads, sauces, and cooking.",
       farmer: "Green Valley Farm",
       farmerLocation: "St. Thomas",
       price: 4.5,
       unit: "lb",
       quantity: 50,
-      image: "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
       category: "vegetables",
       inSeason: true,
       organic: true,
@@ -72,7 +82,6 @@ const Cultiv8VI = () => {
     { id: "roots", name: "Root Vegetables", icon: "🥕" },
   ];
 
-
   const addToCart = (item: Produce) => {
     setCart([...cart, { ...item, cartId: Date.now() }]);
   };
@@ -80,11 +89,6 @@ const Cultiv8VI = () => {
   const removeFromCart = (cartId: number) => {
     setCart(cart.filter((item) => item.cartId !== cartId));
   };
-
-
-
-
-
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -99,7 +103,7 @@ const Cultiv8VI = () => {
         userType={userType}
         setUserType={setUserType}
         cart={cart}
-        notifications={notifications}
+        notificationsCount={notificationsCount}
       />
       {activeTab === "home" && <HomePage setActiveTab={setActiveTab} />}
       {activeTab === "marketplace" && (
