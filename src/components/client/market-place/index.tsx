@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Search, Filter, ShoppingCart, Loader, X } from "lucide-react";
-import ProductCard from "../components/card";
-import ProductDetailModal from "../components/modal";
+import ProductCard from "../../ui/card";
+import ProductDetailModal from "../../ui/modal";
 import { useProductsFromFarms } from "@/hooks/useFarms";
 import { Product } from "@/types";
 import { useCart } from "@/context/cart";

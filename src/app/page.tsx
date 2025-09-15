@@ -3,7 +3,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Leaf } from "lucide-react";
 import HomePage from "./HomePage";
-import MarketplacePage from "./MarketplacePage";
+import MarketplacePage from "@/components/client/market-place";
 import FarmersPage from "./FarmersPage";
 import FarmerDashboard from "./dashboard/page";
 import { Product, ProductCategory } from "@/types";
