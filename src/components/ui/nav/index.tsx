@@ -69,8 +69,9 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
             
             
               <Link 
-                href="/HomePage"
+                href="/?activeTab=home"
                 className="px-3 py-2 rounded transition hover:bg-green-500"
+                
               >
                 Home
               </Link>
@@ -85,7 +86,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               </button> */}
 
               <Link 
-                href="/FarmersPage"
+                href="/"
+                onClick={() => setActiveTab("FarmersPage")}
                 className="px-3 py-2 rounded transition hover:bg-green-500"
               >
                 Market
@@ -126,7 +128,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   Dashboard
                 </button>
               )} */}
-              {userType === "farmer" && (
+              {/* {userType === "farmer" && ( */}
                 <button
                   onClick={() => router.push("/help")}
                   className="flex items-center space-x-1 px-3 py-2 rounded transition hover:bg-green-500"
@@ -134,7 +136,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   <HelpCircle className="h-4 w-4" />
                   <span>Help</span>
                 </button>
-              )}
+              {/* )} */}
             </div>
           </div>
 
@@ -201,15 +203,16 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
              {/* </button> */}
 
               <Link 
-                href="/HomePage"
+                href="/?activeTab=home"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
               >
                 Home
               </Link>
+             
               <button
                 onClick={() => {
-                  setActiveTab("marketplace");
+                  setActiveTab("market");
                   setIsMobileMenuOpen(false);
                 }}
                 className={`text-left px-3 py-2 rounded transition ${
