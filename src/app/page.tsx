@@ -3,7 +3,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Leaf } from "lucide-react";
 import HomePage from "./HomePage";
-import MarketplacePage from "@/components/client/market-place";
+import Marketplace from "@/components/client/market-place";
 import FarmersPage from "./FarmersPage";
 import FarmerDashboard from "./dashboard/page";
 import { Product, ProductCategory } from "@/types";
@@ -69,7 +69,7 @@ const Cultiv8VI = () => {
 
       {activeTab === "home" && <HomePage setActiveTab={setActiveTab} />}
       {activeTab === "marketplace" && (
-        <MarketplacePage
+        <Marketplace
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           selectedCategory={selectedCategory}
