@@ -32,12 +32,20 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   // Check current route to set active tab
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
       const tabParam = urlParams.get('activeTab');
-      if (tabParam) {
+      
+      if (currentPath === '/market') {
+        setActiveTab('market');
+      } else if (currentPath === '/about') {
+        setActiveTab('about');
+      } else if (currentPath === '/help') {
+        setActiveTab('help');
+      } else if (tabParam) {
         setActiveTab(tabParam);
-      } else if (window.location.pathname === '/') {
-        setActiveTab('market'); // Default to market for main page
+      } else if (currentPath === '/') {
+        setActiveTab('home');
       }
     }
   }, []);
@@ -83,8 +91,10 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
             
               <Link 
                 href="/?activeTab=home"
-                className="px-3 py-2 rounded transition hover:bg-green-500"
-                
+                onClick={() => setActiveTab("home")}
+                className={`px-3 py-2 rounded transition ${
+                  activeTab === "home" ? "bg-green-700" : "hover:bg-green-500"
+                }`}
               >
                 Home
               </Link>
@@ -99,7 +109,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               </button> */}
 
               <Link 
-                href="/?activeTab=marketplace"
+                href="/market"
                 onClick={() => setActiveTab("market")}
                 className={`px-3 py-2 rounded transition ${
                   activeTab === "market" ? "bg-green-700" : "hover:bg-green-500"
@@ -124,9 +134,12 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
               <Link 
                 href="/about"
-                className="px-3 py-2 rounded transition hover:bg-green-500"
+                onClick={() => setActiveTab("about")}
+                className={`px-3 py-2 rounded transition ${
+                  activeTab === "about" ? "bg-green-700" : "hover:bg-green-500"
+                }`}
               >
-                About 
+                About
               </Link>
 
 
@@ -144,13 +157,16 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 </button>
               )} */}
               {/* {userType === "farmer" && ( */}
-                <button
-                  onClick={() => router.push("/help")}
-                  className="flex items-center space-x-1 px-3 py-2 rounded transition hover:bg-green-500"
+                <Link
+                  href="/help"
+                  onClick={() => setActiveTab("help")}
+                  className={`flex items-center space-x-1 px-3 py-2 rounded transition ${
+                    activeTab === "help" ? "bg-green-700" : "hover:bg-green-500"
+                  }`}
                 >
                   <HelpCircle className="h-4 w-4" />
                   <span>Help</span>
-                </button>
+                </Link>
               {/* )} */}
             </div>
           </div>
@@ -219,8 +235,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
               <Link 
                 href="/?activeTab=home"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
+                onClick={() => {
+                  setActiveTab("home");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left px-3 py-2 rounded transition w-full block ${
+                  activeTab === "home" ? "bg-green-700" : "hover:bg-green-500"
+                }`}
               >
                 Home
               </Link>
@@ -231,15 +252,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
 
               <Link
-                href="/?activeTab=marketplace"
+                href="/market"
                 onClick={() => {
                   setActiveTab("market");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`text-left px-3 py-2 rounded transition block ${
-                  activeTab === "market"
-                    ? "bg-green-700"
-                    : "hover:bg-green-500"
+                className={`text-left px-3 py-2 rounded transition w-full block ${
+                  activeTab === "market" ? "bg-green-700" : "hover:bg-green-500"
                 }`}
               >
                 Market
@@ -247,18 +266,16 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
 
               <Link
-                href="/?activeTab=about"
+                href="/about"
                 onClick={() => {
                   setActiveTab("about");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`text-left px-3 py-2 rounded transition block ${
-                  activeTab === "about"
-                    ? "bg-green-700"
-                    : "hover:bg-green-500"
+                className={`text-left px-3 py-2 rounded transition w-full block ${
+                  activeTab === "about" ? "bg-green-700" : "hover:bg-green-500"
                 }`}
               >
-                About 
+                About
               </Link>
 
   
@@ -278,16 +295,19 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 </button> */}
               {/* )} */}
               {userType === "farmer" && (
-                <button
+                <Link
+                  href="/help"
                   onClick={() => {
-                    router.push("/help");
+                    setActiveTab("help");
                     setIsMobileMenuOpen(false);
                   }}
-                  className="text-left px-3 py-2 rounded transition flex items-center space-x-1 hover:bg-green-500"
+                  className={`text-left px-3 py-2 rounded transition flex items-center space-x-1 w-full ${
+                    activeTab === "help" ? "bg-green-700" : "hover:bg-green-500"
+                  }`}
                 >
                   <HelpCircle className="h-4 w-4" />
                   <span>Help</span>
-                </button>
+                </Link>
               )}
               <div className="flex items-center justify-between pt-2 border-t border-green-500 mt-2">
                 <select

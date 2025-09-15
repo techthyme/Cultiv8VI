@@ -91,7 +91,8 @@ const HomePage: React.FC<HomePageProps> = ({ setActiveTab }) => {
                 </div>
               </div>
 
-              {/* Call to Action Buttons */}
+              {/* Call to Action Buttons */} 
+               {/* this button needs to be connected to the marke page */}
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
                 <button
                   onClick={() => setActiveTab("marketplace")}
