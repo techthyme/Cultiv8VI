@@ -86,8 +86,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               </button> */}
 
               <Link 
-                href="/"
-                onClick={() => setActiveTab("FarmersPage")}
+                href="/market"
                 className="px-3 py-2 rounded transition hover:bg-green-500"
               >
                 Market
@@ -209,20 +208,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               >
                 Home
               </Link>
-             
-              <button
-                onClick={() => {
-                  setActiveTab("market");
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left px-3 py-2 rounded transition ${
-                  activeTab === "marketplace"
-                    ? "bg-green-700"
-                    : "hover:bg-green-500"
-                }`}
+              <Link 
+                href="/market"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
               >
                 Marketplace
-              </button>
+              </Link>
 
 
               <Link 

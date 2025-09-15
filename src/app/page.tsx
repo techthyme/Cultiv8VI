@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import { Leaf } from "lucide-react";
 import HomePage from "./HomePage";
 import Marketplace from "@/components/client/market-place";
-import FarmersPage from "./FarmersPage";
 import FarmerDashboard from "./dashboard/page";
 import { Product, ProductCategory } from "@/types";
 
@@ -19,7 +18,7 @@ const SearchParamsHandler = ({
     const tabParam = searchParams.get("activeTab");
     if (
       tabParam &&
-      ["home", "marketplace", "farmers", "dashboard"].includes(tabParam)
+      ["home", "marketplace", "dashboard"].includes(tabParam)
     ) {
       setActiveTab(tabParam);
     }
@@ -78,7 +77,6 @@ const Cultiv8VI = () => {
           setShowFilters={setShowFilters}
         />
       )}
-      {activeTab === "farmers" && <FarmersPage />}
       {activeTab === "dashboard" && userType === "farmer" && (
         <FarmerDashboard products={sampleProductsForDashboard} />
       )}

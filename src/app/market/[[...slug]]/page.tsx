@@ -1,5 +1,4 @@
 "use client";
-// Removed duplicate default export
 import React from "react";
 import { Product, ProductCategory } from "@/types";
 import ProductGrid from "@/components/ui/product-grid";
@@ -10,11 +9,6 @@ interface MarketPageProps {
 }
 
 const MarketPage = ({}: MarketPageProps) => {
-  return <div>MarketPage</div>;
-};
-
-
-const FarmersPage: React.FC = () => {
   const { addItemToCart } = useCart();
 
   // Sample Virgin Islands produce data
@@ -236,4 +230,4 @@ const FarmersPage: React.FC = () => {
   );
 };
 
-export default FarmersPage;
+export default MarketPage;

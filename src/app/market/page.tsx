@@ -4,7 +4,7 @@ import { Product, ProductCategory } from "@/types";
 import ProductGrid from "@/components/ui/product-grid";
 import { useCart } from "@/context/cart";
 
-const FarmersPage: React.FC = () => {
+const MarketPage = () => {
   const { addItemToCart } = useCart();
 
   // Sample Virgin Islands produce data
@@ -226,4 +226,4 @@ const FarmersPage: React.FC = () => {
   );
 };
 
-export default FarmersPage;
+export default MarketPage;
