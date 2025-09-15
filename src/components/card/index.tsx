@@ -1,16 +1,19 @@
-
-import React from 'react'
-import Image from 'next/image'
-import { MapPin, Heart } from 'lucide-react'
-import { Produce } from '../types'
+import React from "react";
+import Image from "next/image";
+import { MapPin, Heart } from "lucide-react";
+import { Product } from "@/types";
 
 interface ProductCardProps {
-  product: Produce;
-  onAddToCart: (product: Produce) => void;
-  onViewDetails?: (product: Produce) => void;
+  product: Product;
+  onAddToCart: (product: Product) => void;
+  onViewDetails?: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  onAddToCart,
+  onViewDetails,
+}) => {
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 overflow-hidden">
       <div className="relative">
@@ -54,7 +57,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         <div className="flex items-center text-sm text-gray-600 mb-2">
           <MapPin className="h-4 w-4 mr-1" />
           <span>
-            {product.farmer} • {product.farmerLocation}
+            {/* FIXME: handle farm location value */}
+            {product.farmer} • product.farmerLocation
           </span>
         </div>
 
@@ -85,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Produce } from '../types';
+import { Product } from '@/types';
 
 interface UseProduceOptions {
   category?: string;
@@ -9,7 +9,7 @@ interface UseProduceOptions {
 
 interface ProduceResponse {
   success: boolean;
-  data: Produce[];
+  data: Product[];
   total: number;
   error?: string;
 }
@@ -71,7 +71,7 @@ export function useProduce(options: UseProduceOptions = {}) {
 
 // Hook for fetching a single produce item
 export function useProduceItem(id: number) {
-  const { data, error, isLoading, mutate } = useSWR<{ success: boolean; data: Produce }>(
+  const { data, error, isLoading, mutate } = useSWR<{ success: boolean; data: Product }>(
     id ? `/api/produce/${id}` : null,
     async () => {
       const response = await fetch('/api/produce', {

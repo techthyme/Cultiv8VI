@@ -1,21 +1,14 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import {
-  Package,
-  TrendingUp,
-  Users,
-  Star,
-  Bell,
-  Calendar,
-} from "lucide-react";
-import { Produce } from "./types";
+import { Package, TrendingUp, Users, Star, Bell, Calendar } from "lucide-react";
+import { Product } from "@/types";
 
 interface FarmerDashboardProps {
-  produce: Produce[];
+  products: Product[];
 }
 
-const FarmerDashboard: React.FC<FarmerDashboardProps> = ({ produce }) => {
+const FarmerDashboard: React.FC<FarmerDashboardProps> = ({ products }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -146,7 +139,7 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({ produce }) => {
               </button>
             </div>
             <div className="divide-y divide-gray-200">
-              {produce.slice(0, 4).map((item) => (
+              {products?.slice(0, 4).map((item) => (
                 <div key={item.id} className="p-6">
                   <div className="flex items-center space-x-4">
                     <Image

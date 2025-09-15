@@ -1,7 +1,7 @@
 "use client";
 
-import { SWRConfig } from 'swr';
-import { ReactNode } from 'react';
+import { SWRConfig } from "swr";
+import { ReactNode } from "react";
 
 interface SWRProviderProps {
   children: ReactNode;
@@ -20,12 +20,12 @@ export default function SWRProvider({ children }: SWRProviderProps) {
         errorRetryInterval: 1000,
         // Global error handler
         onError: (error) => {
-          console.error('SWR Error:', error);
+          console.error("SWR Error:", error);
         },
         // Global success handler
         onSuccess: (data, key) => {
           // You can add analytics or logging here
-          console.log('SWR Success:', key);
+          console.log("SWR Success:", key);
         },
       }}
     >

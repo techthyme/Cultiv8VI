@@ -1,39 +1,9 @@
 import { NextResponse } from 'next/server';
-
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  category: string;
-  inSeason: boolean;
-  organic: boolean;
-  harvestDate: string;
-}
-
-export interface Farm {
-  id: number;
-  name: string;
-  description: string;
-  location: string;
-  rating: number;
-  image: string;
-  certified: boolean;
-  specialties: string[];
-  contact: {
-    phone: string;
-    email: string;
-  };
-  products: Product[];
-}
-
+import {Farm, Product, ProductCategory} from "@/types"
 // Sample farms data with their products
 const farmsData: Farm[] = [
   {
-    id: 1,
+    id: "some_id",
     name: "Green Valley Farm",
     description: "A family-owned organic farm specializing in fresh vegetables and herbs. We've been serving the Virgin Islands community for over 20 years with sustainable farming practices.",
     location: "St. Thomas",
@@ -47,40 +17,43 @@ const farmsData: Farm[] = [
     },
     products: [
       {
-        id: 1,
+        id: "some_id",
         name: "Organic Tomatoes",
         description: "Fresh, juicy organic tomatoes grown in Virgin Islands soil. Perfect for salads, cooking, and sauces. Hand-picked at peak ripeness for maximum flavor and nutrition.",
         price: 4.5,
         unit: "lb",
         quantity: 50,
         image: "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
-        category: "vegetables",
+        category: ProductCategory.vegetables,
+        farm_id: "some_id",
         inSeason: true,
         organic: true,
         harvestDate: "2024-08-25",
       },
       {
-        id: 4,
+        id: "4",
         name: "Fresh Basil",
         description: "Aromatic organic basil grown in greenhouse conditions. Perfect for Italian dishes, pesto, and garnishes. Picked daily for maximum freshness and flavor.",
         price: 8.0,
         unit: "bunch",
         quantity: 30,
         image: "https://images.unsplash.com/photo-1618375569909-3c8616cf7733?w=300&h=200&fit=crop",
-        category: "herbs",
+        category: ProductCategory.herbs,
+        farm_id: "some_id",
         inSeason: true,
         organic: true,
         harvestDate: "2024-08-27",
       },
       {
-        id: 7,
+        id: "7",
         name: "Organic Lettuce",
         description: "Crisp, fresh lettuce grown without pesticides. Perfect for salads and sandwiches. Harvested daily to ensure peak freshness.",
         price: 3.25,
         unit: "head",
         quantity: 40,
         image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop",
-        category: "vegetables",
+        category: ProductCategory.vegetables,
+        farm_id: "some_id",
         inSeason: true,
         organic: true,
         harvestDate: "2024-08-28",
@@ -88,7 +61,7 @@ const farmsData: Farm[] = [
     ]
   },
   {
-    id: 2,
+    id: "2",
     name: "Tropical Paradise Gardens",
     description: "Specializing in tropical fruits and coconuts, we grow the sweetest and most flavorful fruits on the islands. Our coastal location provides the perfect climate for tropical cultivation.",
     location: "St. John",
@@ -102,40 +75,43 @@ const farmsData: Farm[] = [
     },
     products: [
       {
-        id: 2,
+        id: "2",
         name: "Fresh Mangoes",
         description: "Sweet, tropical mangoes bursting with flavor. Locally grown in the Virgin Islands with no pesticides. Perfect for eating fresh, smoothies, or desserts.",
         price: 3.25,
         unit: "lb",
         quantity: 75,
         image: "https://images.unsplash.com/photo-1605027990121-cbae9ea5b4c4?w=300&h=200&fit=crop",
-        category: "fruits",
+        category: ProductCategory.fruits,
+        farm_id: "some_id",
         inSeason: true,
         organic: false,
         harvestDate: "2024-08-26",
       },
       {
-        id: 5,
+        id: "5",
         name: "Coconuts",
         description: "Fresh coconuts harvested daily from our coastal groves. Perfect for drinking coconut water or using in cooking. Rich in natural electrolytes and tropical flavor.",
         price: 2.5,
         unit: "each",
         quantity: 40,
         image: "https://images.unsplash.com/photo-1589994635164-b571d3245c7a?w=300&h=200&fit=crop",
-        category: "fruits",
+        category: ProductCategory.fruits,
+        farm_id: "some_id",
         inSeason: true,
         organic: true,
         harvestDate: "2024-08-28",
       },
       {
-        id: 8,
+        id: "8",
         name: "Papayas",
         description: "Sweet, ripe papayas grown in our tropical gardens. Rich in vitamins and perfect for breakfast or desserts. Harvested when perfectly ripe.",
         price: 4.0,
         unit: "each",
         quantity: 25,
         image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&h=200&fit=crop",
-        category: "fruits",
+        category: ProductCategory.fruits,
+        farm_id: "some_id",
         inSeason: true,
         organic: false,
         harvestDate: "2024-08-29",
@@ -143,7 +119,7 @@ const farmsData: Farm[] = [
     ]
   },
   {
-    id: 3,
+    id: "3",
     name: "Island Fresh Produce",
     description: "A traditional Caribbean farm growing authentic island vegetables and spices. We focus on preserving traditional farming methods while delivering fresh, flavorful produce.",
     location: "St. Croix",
@@ -157,40 +133,43 @@ const farmsData: Farm[] = [
     },
     products: [
       {
-        id: 3,
+        id: "3",
         name: "Caribbean Peppers",
         description: "Spicy Caribbean peppers with authentic island heat. Grown using traditional methods passed down through generations. Perfect for adding authentic Caribbean flavor to your dishes.",
         price: 6.0,
         unit: "lb",
         quantity: 25,
         image: "https://images.unsplash.com/photo-1583201111945-2b9fc8b1bb66?w=300&h=200&fit=crop",
-        category: "vegetables",
+        category: ProductCategory.vegetables,
+        farm_id: "some_id",
         inSeason: true,
         organic: false,
         harvestDate: "2024-08-24",
       },
       {
-        id: 6,
+        id: "6",
         name: "Sweet Plantains",
         description: "Ripe, sweet plantains perfect for frying or baking. A Caribbean staple that's versatile and delicious. Naturally sweet and packed with nutrients.",
         price: 3.75,
         unit: "lb",
         quantity: 60,
         image: "https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=300&h=200&fit=crop",
-        category: "fruits",
+        category: ProductCategory.fruits,
+        farm_id: "some_id",
         inSeason: true,
         organic: false,
         harvestDate: "2024-08-25",
       },
       {
-        id: 9,
+        id: "9",
         name: "Yuca Root",
         description: "Fresh yuca root, a traditional Caribbean staple. Perfect for boiling, frying, or making into flour. Rich in carbohydrates and naturally gluten-free.",
         price: 2.25,
         unit: "lb",
         quantity: 35,
         image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=300&h=200&fit=crop",
-        category: "vegetables",
+        category: ProductCategory.vegetables,
+        farm_id: "some_id",
         inSeason: true,
         organic: false,
         harvestDate: "2024-08-26",
@@ -211,7 +190,7 @@ export async function GET(request: Request) {
 
     // Filter by specific farm ID
     if (farmId) {
-      const farm = filteredFarms.find(f => f.id === parseInt(farmId));
+      const farm = filteredFarms.find(f => f.id === farmId);
       return NextResponse.json({
         success: true,
         data: farm || null,
