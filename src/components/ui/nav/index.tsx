@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart";
+import Link from "next/link";
 
 interface NavBarProps {
   nothing?: null;
@@ -63,15 +64,36 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               <span className="font-bold text-xl">Cultiv8VI</span>
             </div>
             <div className="hidden md:flex space-x-6">
-              <button
+            
+            
+            
+            
+              <Link 
+                href="/HomePage"
+                className="px-3 py-2 rounded transition hover:bg-green-500"
+              >
+                Home
+              </Link>
+            
+              {/* <button
                 onClick={() => setActiveTab("home")}
                 className={`px-3 py-2 rounded transition ${
                   activeTab === "home" ? "bg-green-700" : "hover:bg-green-500"
                 }`}
               >
                 Home
-              </button>
-              <button
+              </button> */}
+
+              <Link 
+                href="/FarmersPage"
+                className="px-3 py-2 rounded transition hover:bg-green-500"
+              >
+                Market
+              </Link>
+
+
+
+              {/* <button
                 onClick={() => setActiveTab("marketplace")}
                 className={`px-3 py-2 rounded transition ${
                   activeTab === "marketplace"
@@ -80,24 +102,19 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 }`}
               >
                 Marketplace
-              </button>
-              <button
-                onClick={() => setActiveTab("farmers")}
-                className={`px-3 py-2 rounded transition ${
-                  activeTab === "farmers"
-                    ? "bg-green-700"
-                    : "hover:bg-green-500"
-                }`}
-              >
-                Farmers
-              </button>
-              <button
-                onClick={() => router.push("/about")}
+              </button> */}
+
+
+              <Link 
+                href="/about"
                 className="px-3 py-2 rounded transition hover:bg-green-500"
               >
                 About Us
-              </button>
-              {userType === "farmer" && (
+              </Link>
+
+
+              
+              {/* {userType === "farmer" && (
                 <button
                   onClick={() => setActiveTab("dashboard")}
                   className={`px-3 py-2 rounded transition ${
@@ -108,7 +125,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 >
                   Dashboard
                 </button>
-              )}
+              )} */}
               {userType === "farmer" && (
                 <button
                   onClick={() => router.push("/help")}
@@ -133,8 +150,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 // onChange={(e) => setUserType(e.target.value)}
                 className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               >
-                <option value="business">Business</option>
-                <option value="farmer">Farmer</option>
+                {/* <option value="business">Business</option>
+                <option value="farmer">Farmer</option> */}
               </select>
               <div className="relative">
                 <Bell className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
@@ -172,17 +189,24 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-green-500 pb-4">
             <div className="flex flex-col space-y-2 pt-4">
-              <button
-                onClick={() => {
-                  setActiveTab("home");
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left px-3 py-2 rounded transition ${
-                  activeTab === "home" ? "bg-green-700" : "hover:bg-green-500"
-                }`}
+             
+             
+             {/* <Link href="/about">
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full"
+                >
+                  About Us */}
+   
+             {/* </button> */}
+
+              <Link 
+                href="/HomePage"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
               >
                 Home
-              </button>
+              </Link>
               <button
                 onClick={() => {
                   setActiveTab("marketplace");
@@ -196,29 +220,19 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               >
                 Marketplace
               </button>
-              <button
-                onClick={() => {
-                  setActiveTab("farmers");
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left px-3 py-2 rounded transition ${
-                  activeTab === "farmers"
-                    ? "bg-green-700"
-                    : "hover:bg-green-500"
-                }`}
-              >
-                Farmers
-              </button>
-              <button
-                onClick={() => {
-                  router.push("/about");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="text-left px-3 py-2 rounded transition hover:bg-green-500"
+
+
+              <Link 
+                href="/about"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
               >
                 About Us
-              </button>
-              {userType === "farmer" && (
+              </Link>
+  
+
+  
+              {/* {userType === "farmer" && (
                 <button
                   onClick={() => {
                     setActiveTab("dashboard");
@@ -231,8 +245,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   }`}
                 >
                   Dashboard
-                </button>
-              )}
+                </button> */}
+              {/* )} */}
               {userType === "farmer" && (
                 <button
                   onClick={() => {
@@ -251,13 +265,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   //   onChange={(e) => setUserType(e.target.value)}
                   onChange={(e) =>
                     console.log(
-                      `need to implement setUserType(e.target.value) when switching to ${e.target.value}`
+                      // `need to implement setUserType(e.target.value) when switching to ${e.target.value}`
                     )
                   }
-                  className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                  // className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                 >
-                  <option value="business">Business</option>
-                  <option value="farmer">Farmer</option>
+                  {/* <option value="business">Business</option>
+                  <option value="farmer">Farmer</option> */}
                 </select>
                 <div className="flex items-center space-x-4">
                   <div className="relative">
