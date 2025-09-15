@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Search, Filter, Grid, List, SlidersHorizontal } from "lucide-react";
+import { Search,  Grid, List } from "lucide-react";
 import { Product, ProductCategory } from "@/types";
 import ProductCard from "../product-card";
 
@@ -22,7 +22,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("name");
-  const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // Filter and sort products

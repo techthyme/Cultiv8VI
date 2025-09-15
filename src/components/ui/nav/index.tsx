@@ -9,7 +9,6 @@ import {
   Leaf,
   HelpCircle,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart";
 import Link from "next/link";
 
@@ -21,7 +20,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   const {
     state: { products },
   } = useCart();
-  const router = useRouter();
+ // const router = useRouter();
   const userType: "customer" | "farmer" = "farmer";
   // FIXME: Need to implement a notifications context
   const notificationsCount = 3;
@@ -312,16 +311,15 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               <div className="flex items-center justify-between pt-2 border-t border-green-500 mt-2">
                 <select
                   value={userType}
-                  //   onChange={(e) => setUserType(e.target.value)}
                   onChange={(e) =>
                     console.log(
-                      // `need to implement setUserType(e.target.value) when switching to ${e.target.value}`
+                      `need to implement setUserType(e.target.value) when switching to ${e.target.value}`
                     )
                   }
-                  // className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                  className="bg-green-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                 >
-                  {/* <option value="business">Business</option>
-                  <option value="farmer">Farmer</option> */}
+                  <option value="business">Business</option>
+                  <option value="farmer">Farmer</option>
                 </select>
                 <div className="flex items-center space-x-4">
                   <div className="relative">

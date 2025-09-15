@@ -9,11 +9,7 @@ import {
   Star,
 } from "lucide-react";
 
-interface HomePageProps {
-  setActiveTab: (tab: string) => void;
-}
-
-const HomePage: React.FC<HomePageProps> = ({ setActiveTab }) => {
+const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Full Width Hero Section */}
@@ -95,7 +91,7 @@ const HomePage: React.FC<HomePageProps> = ({ setActiveTab }) => {
                {/* this button needs to be connected to the marke page */}
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
                 <button
-                  onClick={() => setActiveTab("marketplace")}
+                  onClick={() => window.location.href = "/market"}
                   className="group relative bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 min-w-[200px]"
                 >
                   <span className="relative z-10 flex items-center justify-center">

@@ -66,7 +66,7 @@ const Cultiv8VI = () => {
         <SearchParamsHandler setActiveTab={setActiveTab} />
       </Suspense>
 
-      {activeTab === "home" && <HomePage setActiveTab={setActiveTab} />}
+      {activeTab === "home" && <HomePage />}
       {activeTab === "marketplace" && (
         <Marketplace
           searchTerm={searchTerm}

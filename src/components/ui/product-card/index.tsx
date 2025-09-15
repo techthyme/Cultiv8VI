@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { ShoppingCart, Star, MapPin, Clock, Leaf } from "lucide-react";
+import { ShoppingCart, MapPin, Clock, Leaf } from "lucide-react";
 import { Product } from "@/types";
 
 interface ProductCardProps {
