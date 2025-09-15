@@ -28,6 +28,19 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   const [activeTab, setActiveTab] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Check current route to set active tab
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('activeTab');
+      if (tabParam) {
+        setActiveTab(tabParam);
+      } else if (window.location.pathname === '/') {
+        setActiveTab('market'); // Default to market for main page
+      }
+    }
+  }, []);
   // const [searchTerm, setSearchTerm] = useState("");
   // const [selectedCategory, setSelectedCategory] = useState("all");
   // const [showFilters, setShowFilters] = useState(false);
@@ -86,8 +99,11 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               </button> */}
 
               <Link 
-                href="/market"
-                className="px-3 py-2 rounded transition hover:bg-green-500"
+                href="/?activeTab=marketplace"
+                onClick={() => setActiveTab("market")}
+                className={`px-3 py-2 rounded transition ${
+                  activeTab === "market" ? "bg-green-700" : "hover:bg-green-500"
+                }`}
               >
                 Market
               </Link>
@@ -110,7 +126,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 href="/about"
                 className="px-3 py-2 rounded transition hover:bg-green-500"
               >
-                About Us
+                About 
               </Link>
 
 
@@ -208,23 +224,42 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               >
                 Home
               </Link>
-              <Link 
-                href="/market"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
+             
+
+
+
+
+
+              <Link
+                href="/?activeTab=marketplace"
+                onClick={() => {
+                  setActiveTab("market");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left px-3 py-2 rounded transition block ${
+                  activeTab === "market"
+                    ? "bg-green-700"
+                    : "hover:bg-green-500"
+                }`}
               >
-                Marketplace
+                Market
               </Link>
 
 
-              <Link 
-                href="/about"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-left px-3 py-2 rounded transition hover:bg-green-500 w-full block"
+              <Link
+                href="/?activeTab=about"
+                onClick={() => {
+                  setActiveTab("about");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left px-3 py-2 rounded transition block ${
+                  activeTab === "about"
+                    ? "bg-green-700"
+                    : "hover:bg-green-500"
+                }`}
               >
-                About Us
+                About 
               </Link>
-  
 
   
               {/* {userType === "farmer" && (
