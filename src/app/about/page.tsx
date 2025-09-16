@@ -67,8 +67,8 @@ const About = () => {
             <Image
               src="https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?w=600&h=400&fit=crop"
               alt="Virgin Islands farmers"
+              width={600}
               height={384}
-              fill
               className="rounded-lg shadow-lg w-full h-96 object-cover"
             />
           </div>
