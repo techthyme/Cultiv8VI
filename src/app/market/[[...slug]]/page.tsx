@@ -1,35 +1,28 @@
-// import React from "react";
-
-// interface MarketPageProps {
-//   params: { slug: string[] };
-// }
-
-// const MarketPage = ({}: MarketPageProps) => {
-//   return <div>MarketPage</div>;
-// };
-
-// export default MarketPage;
-
-
-"use client";
-import React, { useState } from "react";
+// src/app/market/page.tsx
 import Marketplace from "@/components/client/market-place";
+import { Product } from "@/types";
 
-const MarketPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [showFilters, setShowFilters] = useState(false);
+// Server-side fetch from API route
+async function getProducts(): Promise<Product[]> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/market`, {
+    cache: "no-store", // ensures fresh data each time
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch products");
+  }
+
+  return res.json();
+}
+
+export default async function MarketPage() {
+  const products = await getProducts();
 
   return (
-    <Marketplace
-      searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-      showFilters={showFilters}
-      setShowFilters={setShowFilters}
-    />
+    <div>
+      <h1 className="text-2xl font-bold mb-6">Marketplace</h1>
+      <Marketplace products={products} />
+    </div>
   );
-};
-
-export default MarketPage;
+}

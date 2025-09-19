@@ -33,6 +33,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   }, [searchTerm]);
 
   // ✅ Instant local filtering (always uses raw searchTerm)
+  console.log ("Products", products);
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -46,16 +47,33 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   });
 
   // ✅ API call triggers only after debounce delay
-  useEffect(() => {
-    if (!debouncedSearchTerm) return;
+  // useEffect(() => {
+  //   if (!debouncedSearchTerm) return;
 
-    console.log("Fetching products for:", debouncedSearchTerm);
+  //   console.log("Fetching products for:", debouncedSearchTerm);
 
-    fetch(`/api/market?q=${debouncedSearchTerm}`)
-      .then((res) => res.json())
-      .then((data) => console.log("Fetched:", data))
-      .catch((err) => console.error(err));
-  }, [debouncedSearchTerm]);
+  //   fetch(`/api/market?q=${debouncedSearchTerm}`)
+  //     .then((res) => res.json())
+  //     .then((data) => console.log("Fetched:", data))
+  //     .catch((err) => console.error(err));
+  // }, [debouncedSearchTerm]);
+
+useEffect(() => {
+  if (!debouncedSearchTerm) return;
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  if (!baseUrl) {
+    console.error("❌ NEXT_PUBLIC_BASE_URL is not defined");
+    return;
+  }
+
+  fetch(`${baseUrl}/api/market?q=${debouncedSearchTerm}`)
+    .then((res) => res.json())
+    .then((data) => console.log("Fetched:", data))
+    .catch((err) => console.error(err));
+}, [debouncedSearchTerm]);
+
 
   const categories = [
     { value: "all", label: "All Products", icon: "🛒" },
