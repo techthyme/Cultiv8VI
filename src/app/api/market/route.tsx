@@ -1,39 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { Product, Farm, ProductCategory } from "@/types";
-
+import { Product, MarketQuery, ProductResult,ProductCategory, SortKey, MarketResponse } from "@/types";
 // --- Config ---
 export const dynamic = "force-dynamic"; // don't cache this route during dev
 
-// --- Types for this endpoint ---
-type SortKey = "newest" | "price_asc" | "price_desc" | "rating_desc";
 
-export type MarketQuery = {
-  q?: string;
-  category?: ProductCategory;
-  location?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  inSeason?: boolean;
-  organic?: boolean;
-  certified?: boolean; // farm-level filter
-  sort?: SortKey;
-  page: number;
-  pageSize: number;
-};
 
-// What each item looks like in the response: Product + minimal farm info
-export type ProductResult = Product & {
-  farm: Pick<Farm, "id" | "name" | "location" | "rating" | "image" | "certified">;
-};
 
-export type MarketResponse = {
-  items: ProductResult[];
-  page: number;
-  pageSize: number;
-  total: number;
-  totalPages: number;
-  applied: Omit<MarketQuery, "page" | "pageSize">;
-};
 
 // --- Helpers for parsing query params ---
 const toNum = (v: string | null, fallback?: number) => {
@@ -113,7 +85,74 @@ export async function GET(req: NextRequest) {
   // should apply pagination *in the data layer* for performance.
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  const body: MarketResponse = {
+   const sampleProducts: Product[] = [
+    {
+      id: "1",
+      farm_id: "1",
+      name: "Organic Tomatoes",
+      description: "Fresh, vine-ripened organic tomatoes grown in rich Virgin Islands soil. Perfect for salads, sauces, and cooking.",
+      farmer: "Green Valley Farm",
+      farmerLocation: "St. Thomas",
+      price: 4.50,
+      unit: "lb",
+      quantity: 50,
+      image: "https://images.unsplash.com/photo-1546470427-e42146a5e5d3?w=300&h=200&fit=crop",
+      category: ProductCategory.vegetables,
+      inSeason: true,
+      organic: true,
+      harvestDate: "2024-08-25",
+    },
+    {
+      id: "2", 
+      farm_id: "2",
+      name: "Fresh Mangoes",
+      description: "Sweet, juicy mangoes harvested at peak ripeness from our tropical orchards.",
+      farmer: "Tropical Paradise Farm",
+      farmerLocation: "St. John",
+      price: 6.00,
+      unit: "lb",
+      quantity: 25,
+      image: "https://images.unsplash.com/photo-1553279091-75a834c48d99?w=300&h=200&fit=crop",
+      category: ProductCategory.fruits,
+      inSeason: true,
+      organic: false,
+      harvestDate: "2024-08-26",
+    },
+    {
+      id: "3",
+      farm_id: "3", 
+      name: "Fresh Basil",
+      description: "Aromatic basil leaves perfect for cooking, cocktails, and garnishing.",
+      farmer: "Herb Haven",
+      farmerLocation: "St. Croix",
+      price: 3.25,
+      unit: "bunch",
+      quantity: 15,
+      image: "https://images.unsplash.com/photo-1618375569909-3c8616cf05d2?w=300&h=200&fit=crop",
+      category: ProductCategory.herbs,
+      inSeason: true,
+      organic: true,
+      harvestDate: "2024-08-27",
+    },
+    {
+      id: "4",
+      farm_id: "1",
+      name: "Sweet Peppers",
+      description: "Colorful bell peppers in red, yellow, and orange varieties.",
+      farmer: "Green Valley Farm", 
+      farmerLocation: "St. Thomas",
+      price: 5.00,
+      unit: "lb",
+      quantity: 30,
+      image: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=300&h=200&fit=crop",
+      category: ProductCategory.vegetables,
+      inSeason: true,
+      organic: true,
+      harvestDate: "2024-08-24",
+    },
+  ];
+/**
+ * {
     items,
     page,
     pageSize,
@@ -130,6 +169,10 @@ export async function GET(req: NextRequest) {
       certified,
       sort,
     },
+  }
+ */
+  const body: MarketResponse = {
+    products:sampleProducts
   };
 
   return NextResponse.json(body, {
