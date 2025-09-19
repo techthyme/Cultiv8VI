@@ -18,12 +18,11 @@ async function getProducts(): Promise<MarketResponse> {
 }
 
 export default async function MarketPage() {
-  const products = await getProducts();
+  const mresponse = await getProducts();
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Marketplace</h1>
-      <Marketplace products={products.products} />
+      <Marketplace products={mresponse.products} />
     </div>
   );
 }
