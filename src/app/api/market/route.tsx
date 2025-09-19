@@ -174,6 +174,7 @@ export async function GET(req: NextRequest) {
   const body: MarketResponse = {
     products:sampleProducts
   };
+  await new Promise((r) => setTimeout(r, 1500)); // simulate load
 
   return NextResponse.json(body, {
     headers: { "Cache-Control": "no-store" },

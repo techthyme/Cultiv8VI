@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/context/cart";
 import NavBar from "@/components/ui/nav";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <CartProvider>
           <NavBar />
+          <Suspense fallback={<p>Loading...</p>}>
           <main>{children}</main>
+          </Suspense>
         </CartProvider>
       </body>
     </html>
