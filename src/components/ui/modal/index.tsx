@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { X, MapPin, Calendar, Package, Leaf, ShoppingCart } from "lucide-react";
+import { X, MapPin, Calendar, Package, Leaf, ShoppingCart, User, Star, Award } from "lucide-react";
 import { Product } from "@/types";
-
 interface ProductDetailModalProps {
   product: Product;
   isOpen: boolean;
@@ -79,7 +78,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="flex items-center text-gray-600 mb-2">
                   <MapPin className="h-4 w-4 mr-1" />
                   {/* FIXME: handle the farm location value */}
-                  <span>{product.farmer} • product.farmerLocation</span>
+                <span>{product.farmer} • {product.farmerLocation}</span>
                 </div>
               </div>
               <div className="text-right">
@@ -99,6 +98,55 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {product.description}
               </p>
             </div>
+
+            {/* Farmer Information */}
+  <div className="mb-6">
+    <h3 className="text-lg font-semibold text-gray-900 mb-3 
+  flex items-center">
+      <User className="h-5 w-5 mr-2 text-green-600" />
+      About the Farmer
+    </h3>
+    <div className="bg-green-50 rounded-lg p-4 border 
+  border-green-100">
+      <div className="flex items-start gap-3">
+        <div className="bg-green-600 text-white rounded-full 
+  w-10 h-10 flex items-center justify-center font-semibold">
+          {product.farmer.charAt(0)}
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-1">
+            <h4 className="font-semibold 
+  text-gray-900">{product.farmer}</h4>
+            <div className="flex items-center text-yellow-500">
+              <Star className="h-4 w-4 fill-current" />
+              <span className="text-sm text-gray-600 
+  ml-1">4.8</span>
+            </div>
+          </div>
+          <div className="flex items-center text-sm 
+  text-gray-600 mb-2">
+            <MapPin className="h-4 w-4 mr-1" />
+            <span>{product.farmerLocation}</span>
+          </div>
+          <div className="flex items-center gap-4 text-sm 
+  text-gray-600">
+            <div className="flex items-center">
+              <Award className="h-4 w-4 mr-1 text-green-600" />
+              <span>Certified Organic</span>
+            </div>
+            <div>
+              <span className="font-medium">5+ years</span>
+  farming experience
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 mt-2">
+            "Growing fresh, sustainable produce for our Virgin
+  Islands community since 2019."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
             {/* Product Details */}
             <div className="grid grid-cols-2 gap-4 mb-6">
