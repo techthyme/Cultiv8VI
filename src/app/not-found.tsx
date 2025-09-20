@@ -1,5 +1,5 @@
 "use client";
-import React, { use } from 'react'
+import React, {  } from 'react'
 import Link from 'next/link'
 import { AlertCircle, Home, ArrowLeft } from 'lucide-react'
 
@@ -21,7 +21,7 @@ const NotFoundPage = () => {
           <div className="text-6xl font-bold text-gray-300 mb-4">404</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h1>
           <p className="text-gray-600 mb-6">
-            Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.
+            Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been moved or doesn&apos;t exist.
           </p>
           
           {/* Action Buttons */}

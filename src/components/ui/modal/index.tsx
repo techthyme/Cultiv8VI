@@ -140,8 +140,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
           <p className="text-sm text-gray-600 mt-2">
-            "Growing fresh, sustainable produce for our Virgin
-  Islands community since 2019."
+            &apos;Growing fresh, sustainable produce for our Virgin
+  Islands community since 2019.&apos;
           </p>
         </div>
       </div>
