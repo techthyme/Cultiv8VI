@@ -111,7 +111,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       <div className="flex items-start gap-3">
         <div className="bg-green-600 text-white rounded-full 
   w-10 h-10 flex items-center justify-center font-semibold">
-          {product.farmer.charAt(0)}
+          {product.farmer ? product.farmer.charAt(0) : ""}
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
