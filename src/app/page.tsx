@@ -201,7 +201,7 @@
 // export default Cultiv8VI;
 
 
-import Cultiv8VIClient from "./_components/Cultiv8VIClient";
+import Cultiv8VIClient from "@/components/client/Cultiv8VIClient";
 
 const Cultiv8VI = async () => {
   // Add delay for loading animation

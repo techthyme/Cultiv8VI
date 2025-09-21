@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Leaf } from "lucide-react";
-import HomePage from "../HomePage";
+import HomePage from "./HomePage";
 
 const SearchParamsHandler = ({
   setActiveTab,
