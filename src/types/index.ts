@@ -3,6 +3,43 @@ export interface Person {
 }
 
 
+
+export type MarketResponse = {
+  products: Product[];
+  items?: ProductResult[];
+  page?: number;
+  pageSize?: number;
+  total?: number;
+  totalPages?: number;
+  applied?: Omit<MarketQuery, "page" | "pageSize">;
+};
+
+
+export type SortKey = "newest" | "price_asc" | "price_desc" | "rating_desc";
+
+
+export type MarketQuery = {
+  q?: string;
+  category?: ProductCategory;
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  inSeason?: boolean;
+  organic?: boolean;
+  certified?: boolean; // farm-level filter
+  sort?: SortKey;
+  page: number;
+  pageSize: number;
+};
+
+// What each item looks like in the response: Product + minimal farm info
+export type ProductResult = Product & {
+  farm: Pick<Farm, "id" | "name" | "location" | "rating" | "image" | "certified">;
+};
+
+
+
+
 export interface Farm {
   id: string;
   name: string;
