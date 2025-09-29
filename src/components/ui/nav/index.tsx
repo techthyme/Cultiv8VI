@@ -335,12 +335,15 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
       setActiveTab('about');
     } else if (currentPath === '/help') {
       setActiveTab('help');
+    } else if (currentPath === '/profile') {
+      setActiveTab('profile');
     } else if (currentPath === '/dashboard') {
       setActiveTab('dashboard');
     } else if (tabParam) {
       setActiveTab(tabParam);
     } else if (currentPath === '/') {
       setActiveTab('home');
+      
     }
   }, []);
 
@@ -487,7 +490,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               </Link>
 
 
-              
+
+            
               {/* {userType === "farmer" && (
                 <button
                   onClick={() => setActiveTab("dashboard")}
@@ -531,7 +535,9 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   </span>
                 )}
               </div>
-              <User className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
+              <Link href="/profile">
+                <User className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
+              </Link>
             </div>
 
             <button
@@ -623,6 +629,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   Dashboard
                 </button> */}
               {/* )} */}
+             
+
               <Link
                 href="/help"
                 onClick={() => {
@@ -654,7 +662,9 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                       </span>
                     )}
                   </div>
-                  <User className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
+                  <Link href="/profile">
+                    <User className="h-6 w-6 cursor-pointer hover:text-green-200 transition" />
+                  </Link>
                 </div>
               </div>
             </div>
