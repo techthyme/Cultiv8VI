@@ -9,8 +9,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "npx tsc --noEmit --skipLibCheckt",
-    "check": "eslint"
+    "lint": "eslint"
   },
   "dependencies": {
     "@prisma/client": "^6.15.0",
