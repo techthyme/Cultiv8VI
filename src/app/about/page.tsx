@@ -1,8 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { JSX, SVGProps, useState } from 'react'
 
 const navigation = [
   { name: 'Marketplace', href: '/' },
@@ -152,7 +150,7 @@ const footerNavigation = {
     {
       name: 'Facebook',
       href: '#',
-      icon: (props) => (
+      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
             fillRule="evenodd"
@@ -165,7 +163,7 @@ const footerNavigation = {
     {
       name: 'Instagram',
       href: '#',
-      icon: (props) => (
+      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
             fillRule="evenodd"
@@ -178,7 +176,7 @@ const footerNavigation = {
     {
       name: 'X',
       href: '#',
-      icon: (props) => (
+      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
         </svg>
@@ -343,7 +341,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Our values</h2>
             <p className="mt-6 text-lg/8 text-gray-700">
-              The principles that guide everything we do in building Virgin Islands' premier agricultural marketplace.
+              The principles that guide everything we do in building Virgin Islands&apos; premier agricultural marketplace.
             </p>
           </div>
           <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -361,7 +359,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">Our team</h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              We're a passionate group of Virgin Islands natives and Caribbean agriculture advocates dedicated to 
+              We&apos;re a passionate group of Virgin Islands natives and Caribbean agriculture advocates dedicated to 
               supporting local farmers and strengthening our food system.
             </p>
           </div>
