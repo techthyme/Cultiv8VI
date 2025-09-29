@@ -1,16 +1,12 @@
 @import "tailwindcss";
+/* @import "daisyui"; */
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Removed @theme inline directive - not compatible with current setup */
 
 @media (prefers-color-scheme: dark) {
   :root {

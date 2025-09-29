@@ -98,7 +98,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { Product } from "@/types";
+import { FarmingMethod, Product } from "@/types";
 
 interface ProductCardProps {
   product: Product;
@@ -134,7 +134,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   };
 
   return (
@@ -142,21 +146,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {/* Product Image */}
       <div className="relative">
         <Image
-          src={product.image}
+          src={product.images[0]}
           alt={product.name}
           width={250}
           height={160}
           className="w-full h-40 object-cover"
         />
-        
+
         {/* Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1">
-          {product.organic && (
+          {product.farmingMethod == FarmingMethod.ORGANIC && (
             <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
               Organic
             </span>
           )}
-          {product.quantity > 0 && (
+          {product.quantity && product.quantity > 0 && (
             <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
               In Stock
             </span>
@@ -168,7 +172,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           onClick={handleFavoriteToggle}
           className="absolute top-2 right-2 bg-white/90 hover:bg-white p-1.5 rounded-full shadow-sm transition-colors"
         >
-          <Heart className={`h-4 w-4 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
+          <Heart
+            className={`h-4 w-4 ${
+              isFavorited ? "fill-red-500 text-red-500" : "text-gray-400"
+            }`}
+          />
         </button>
       </div>
 
@@ -182,15 +190,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Price */}
         <div className="text-lg font-bold text-green-600 mb-1">
           ${product.price.toFixed(2)}
-          <span className="text-xs text-gray-500 font-normal ml-1">per {product.unit}</span>
+          <span className="text-xs text-gray-500 font-normal ml-1">
+            per {product.unit}
+          </span>
         </div>
 
         {/* Farmer Info */}
         <div className="text-xs text-gray-600 mb-0.5">
-          🏪 {product.farmer}
+          🏪 {product.farm.farmerName}
         </div>
         <div className="text-xs text-gray-500 mb-1">
-          📍 {product.farmerLocation}
+          📍 {product.farm.locationName}
         </div>
 
         {/* Stock Info */}
@@ -199,9 +209,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Harvest Date */}
-        <div className="text-xs text-gray-500 mb-3">
-          📅 Harvested {formatDate(product.harvestDate)}
-        </div>
+        {product.harvestDate && (
+          <div className="text-xs text-gray-500 mb-3">
+            📅 Harvested {formatDate(product.harvestDate)}
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex gap-2">

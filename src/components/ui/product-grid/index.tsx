@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Product, ProductCategory } from "@/types";
 import ProductCard from "../product-card";
@@ -8,32 +8,80 @@ interface ProductGridProps {
   products: Product[];
   onAddToCart?: (product: Product) => void;
   onProductClick?: (product: Product) => void;
+  title?: string;
+  subtitle?: string;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({
+export const ProductGrid: React.FC<ProductGridProps> = ({
   products,
   onAddToCart,
   onProductClick,
+  // title = "Fresh Produce",
+  // subtitle = "Discover the finest local produce from Virgin Islands farmers",
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Filter products
+  // ✅ Debounce searchTerm -> debouncedSearchTerm
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
+  // ✅ Instant local filtering (always uses raw searchTerm)
+  console.log("Products", products);
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        (product.farmer && product.farmer.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-    
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (product.farm.farmerName &&
+        product.farm.farmerName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()));
+
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+
     return matchesSearch && matchesCategory;
   });
 
+  // ✅ API call triggers only after debounce delay
+  // useEffect(() => {
+  //   if (!debouncedSearchTerm) return;
+
+  //   console.log("Fetching products for:", debouncedSearchTerm);
+
+  //   fetch(`/api/market?q=${debouncedSearchTerm}`)
+  //     .then((res) => res.json())
+  //     .then((data) => console.log("Fetched:", data))
+  //     .catch((err) => console.error(err));
+  // }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    if (!debouncedSearchTerm) return;
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    if (!baseUrl) {
+      console.error("❌ NEXT_PUBLIC_BASE_URL is not defined");
+      return;
+    }
+
+    fetch(`${baseUrl}/api/market?q=${debouncedSearchTerm}`)
+      .then((res) => res.json())
+      .then((data) => console.log("Fetched:", data))
+      .catch((err) => console.error(err));
+  }, [debouncedSearchTerm]);
+
   const categories = [
     { value: "all", label: "All Products", icon: "🛒" },
-    { value: ProductCategory.vegetables, label: "Vegetables", icon: "🥕" },
-    { value: ProductCategory.fruits, label: "Fruits", icon: "🍎" },
-    { value: ProductCategory.herbs, label: "Herbs", icon: "🌿" },
+    { value: ProductCategory.VEGETABLES, label: "Vegetables", icon: "🥕" },
+    { value: ProductCategory.FRUITS, label: "Fruits", icon: "🍎" },
+    { value: ProductCategory.HERBS, label: "Herbs", icon: "🌿" },
     { value: "root_vegetables", label: "Root Vegetables", icon: "🥔" },
   ];
 
