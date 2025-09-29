@@ -1,11 +1,10 @@
 // src/app/market/page.tsx
 import { MarketResponse } from "@/types";
 import Marketplace from "@/components/client/market-place";
-import { Product } from "@/types";
 
 // Server-side fetch from API route
 async function getProducts(): Promise<MarketResponse> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const res = await fetch(`${baseUrl}/api/market`, {
     cache: "no-store", // ensures fresh data each time
   });

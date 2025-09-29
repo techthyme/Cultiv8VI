@@ -4,21 +4,20 @@ import { Product } from "@/types";
 import ProductGrid from "@/components/ui/product-grid";
 import ProductDetailModal from "@/components/ui/modal";
 
-
 interface MarketplaceProps {
   products: Product[];
 }
 
 const Marketplace: React.FC<MarketplaceProps> = ({ products }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [showFilters, setShowFilters] = useState(false);
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [selectedCategory, setSelectedCategory] = useState("all");
+  // const [showFilters, setShowFilters] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-console.log("Products in Marketplace", products);
+  console.log("Products in Marketplace", products);
 
-const handleProductClick = (product: Product) => {
+  const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };

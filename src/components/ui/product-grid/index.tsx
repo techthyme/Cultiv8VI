@@ -33,12 +33,15 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   }, [searchTerm]);
 
   // ✅ Instant local filtering (always uses raw searchTerm)
-  console.log ("Products", products);
+  console.log("Products", products);
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (product.farmer && product.farmer.toLowerCase().includes(searchTerm.toLowerCase()));
+      (product.farm.farmerName &&
+        product.farm.farmerName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()));
 
     const matchesCategory =
       selectedCategory === "all" || product.category === selectedCategory;
@@ -58,28 +61,27 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   //     .catch((err) => console.error(err));
   // }, [debouncedSearchTerm]);
 
-useEffect(() => {
-  if (!debouncedSearchTerm) return;
+  useEffect(() => {
+    if (!debouncedSearchTerm) return;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  if (!baseUrl) {
-    console.error("❌ NEXT_PUBLIC_BASE_URL is not defined");
-    return;
-  }
+    if (!baseUrl) {
+      console.error("❌ NEXT_PUBLIC_BASE_URL is not defined");
+      return;
+    }
 
-  fetch(`${baseUrl}/api/market?q=${debouncedSearchTerm}`)
-    .then((res) => res.json())
-    .then((data) => console.log("Fetched:", data))
-    .catch((err) => console.error(err));
-}, [debouncedSearchTerm]);
-
+    fetch(`${baseUrl}/api/market?q=${debouncedSearchTerm}`)
+      .then((res) => res.json())
+      .then((data) => console.log("Fetched:", data))
+      .catch((err) => console.error(err));
+  }, [debouncedSearchTerm]);
 
   const categories = [
     { value: "all", label: "All Products", icon: "🛒" },
-    { value: ProductCategory.vegetables, label: "Vegetables", icon: "🥕" },
-    { value: ProductCategory.fruits, label: "Fruits", icon: "🍎" },
-    { value: ProductCategory.herbs, label: "Herbs", icon: "🌿" },
+    { value: ProductCategory.VEGETABLES, label: "Vegetables", icon: "🥕" },
+    { value: ProductCategory.FRUITS, label: "Fruits", icon: "🍎" },
+    { value: ProductCategory.HERBS, label: "Herbs", icon: "🌿" },
     { value: "root_vegetables", label: "Root Vegetables", icon: "🥔" },
   ];
 

@@ -35,9 +35,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       const newItems = [...state.products, newItem];
       return {
         products: newItems,
-        totalItems: newItems.reduce((sum, item) => sum + item.quantity, 0),
+        totalItems: newItems.reduce(
+          (sum, product) => sum + product.quantity,
+          0
+        ),
         totalPrice: newItems.reduce(
-          (sum, item) => sum + item.price * item.quantity,
+          (sum, product) => sum + product.price * product.quantity,
           0
         ),
       };
