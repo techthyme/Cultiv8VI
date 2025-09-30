@@ -1,5 +1,4 @@
 'use client'
-
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import { StarIcon } from '@heroicons/react/20/solid'
