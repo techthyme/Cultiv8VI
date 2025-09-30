@@ -1,4 +1,4 @@
-import { ProductCategory, Product, Farm } from ".";
+import { ProductCategory } from ".";
 
 
 export type SortKey = "newest" | "price_asc" | "price_desc" | "rating_desc";

@@ -55,13 +55,14 @@ const sampleFarm: Farm = {
 const produceData: Product[] = [
   {
     id: "1",
-    cart_id: "1",
+    cartId: "1",
     quantity: 2,
     farmId: "farm_1",
     farm: sampleFarm,
     name: "Organic Tomatoes",
     description: "Fresh, juicy organic tomatoes grown in Virgin Islands soil.",
     price: 4.5,
+    color: "blue",
     unit: ProductUnit.POUND,
     quantityAvailable: 50,
     images: [

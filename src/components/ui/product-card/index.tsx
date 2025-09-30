@@ -99,6 +99,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import { FarmingMethod, Product } from "@/types";
+import { useCart } from "@/context/cart";
 
 interface ProductCardProps {
   product: Product;
@@ -111,10 +112,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
   onProductClick,
 }) => {
+  const { addItemToCart } = useCart();
+
   const [isFavorited, setIsFavorited] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    addItemToCart(product);
     if (onAddToCart) {
       onAddToCart(product);
     }
