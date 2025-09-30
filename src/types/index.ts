@@ -180,11 +180,12 @@ export enum PaymentMethod {
  */
 export interface Product {
   id: string;
-  cart_id: string;
+  cartId: string;
   farmId: string;
   farm: Farm;
   name: string;
   description: string;
+  color: string;
   price: number;
   quantity: number;
   unit: ProductUnit;

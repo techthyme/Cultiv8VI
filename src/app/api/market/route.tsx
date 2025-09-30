@@ -66,13 +66,14 @@ export async function GET() {
   const sampleProducts: Product[] = [
     {
       id: "1",
-      cart_id: "2",
+      cartId: "2",
       farmId: "farm_1",
       farm: sampleFarm,
       name: "Organic Tomatoes",
       description:
         "Fresh, vine-ripened organic tomatoes grown in rich Virgin Islands soil.",
       price: 4.5,
+      color: "blue",
       quantity: 2,
       unit: ProductUnit.POUND,
       quantityAvailable: 50,
@@ -91,12 +92,13 @@ export async function GET() {
     },
     {
       id: "2",
-      cart_id: "23",
+      cartId: "23",
       farmId: "farm_1",
       farm: sampleFarm,
       name: "Fresh Basil",
       description: "Aromatic basil leaves perfect for cooking.",
       price: 3.25,
+      color: "blue",
       quantity: 2,
       unit: ProductUnit.BUNCH,
       quantityAvailable: 15,

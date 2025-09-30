@@ -1,191 +1,213 @@
-'use client'
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
-import { StarIcon } from '@heroicons/react/20/solid'
+"use client";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
+import { ChevronDownIcon, FunnelIcon } from "@heroicons/react/20/solid";
+import { StarIcon } from "@heroicons/react/20/solid";
 
 const filters = {
   price: [
-    { value: '0', label: '$0 - $5', checked: false },
-    { value: '5', label: '$5 - $10', checked: false },
-    { value: '10', label: '$10 - $15', checked: false },
-    { value: '15', label: '$15+', checked: false },
+    { value: "0", label: "$0 - $5", checked: false },
+    { value: "5", label: "$5 - $10", checked: false },
+    { value: "10", label: "$10 - $15", checked: false },
+    { value: "15", label: "$15+", checked: false },
   ],
   category: [
-    { value: 'vegetables', label: 'Vegetables', checked: false },
-    { value: 'fruits', label: 'Fruits', checked: true },
-    { value: 'herbs', label: 'Herbs & Spices', checked: false },
-    { value: 'leafy-greens', label: 'Leafy Greens', checked: false },
-    { value: 'root-vegetables', label: 'Root Vegetables', checked: false },
+    { value: "vegetables", label: "Vegetables", checked: false },
+    { value: "fruits", label: "Fruits", checked: true },
+    { value: "herbs", label: "Herbs & Spices", checked: false },
+    { value: "leafy-greens", label: "Leafy Greens", checked: false },
+    { value: "root-vegetables", label: "Root Vegetables", checked: false },
   ],
   location: [
-    { value: 'st-thomas', label: 'St. Thomas', checked: false },
-    { value: 'st-john', label: 'St. John', checked: false },
-    { value: 'st-croix', label: 'St. Croix', checked: false },
+    { value: "st-thomas", label: "St. Thomas", checked: false },
+    { value: "st-john", label: "St. John", checked: false },
+    { value: "st-croix", label: "St. Croix", checked: false },
   ],
   organic: [
-    { value: 'certified-organic', label: 'Certified Organic', checked: false },
-    { value: 'naturally-grown', label: 'Naturally Grown', checked: false },
-    { value: 'pesticide-free', label: 'Pesticide Free', checked: false },
+    { value: "certified-organic", label: "Certified Organic", checked: false },
+    { value: "naturally-grown", label: "Naturally Grown", checked: false },
+    { value: "pesticide-free", label: "Pesticide Free", checked: false },
   ],
-}
+};
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Best Rating', href: '#', current: false },
-]
+  { name: "Most Popular", href: "#", current: true },
+  { name: "Price: Low to High", href: "#", current: false },
+  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Newest", href: "#", current: false },
+  { name: "Best Rating", href: "#", current: false },
+];
 
 const products = [
   {
     id: 1,
-    name: 'Organic Tomatoes (2 lbs)',
-    price: '$8',
+    name: "Organic Tomatoes (2 lbs)",
+    price: "$8",
     rating: 5,
     reviewCount: 24,
-    imageSrc: 'https://images.unsplash.com/photo-1546470427-e9169bb0d6a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Fresh organic tomatoes from Virgin Islands farms',
-    href: '#',
-    farmer: 'Green Valley Farm',
-    location: 'St. Thomas',
+    imageSrc:
+      "https://images.unsplash.com/photo-1546470427-e9169bb0d6a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Fresh organic tomatoes from Virgin Islands farms",
+    href: "#",
+    farmer: "Green Valley Farm",
+    location: "St. Thomas",
   },
   {
     id: 2,
-    name: 'Fresh Lettuce Head',
-    price: '$4',
+    name: "Fresh Lettuce Head",
+    price: "$4",
     rating: 5,
     reviewCount: 18,
-    imageSrc: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Crisp lettuce heads grown locally',
-    href: '#',
-    farmer: 'Island Fresh Gardens',
-    location: 'St. John',
+    imageSrc:
+      "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Crisp lettuce heads grown locally",
+    href: "#",
+    farmer: "Island Fresh Gardens",
+    location: "St. John",
   },
   {
     id: 3,
-    name: 'Caribbean Peppers Mix',
-    price: '$6',
+    name: "Caribbean Peppers Mix",
+    price: "$6",
     rating: 5,
     reviewCount: 31,
-    imageSrc: 'https://images.unsplash.com/photo-1583328651071-c2980b5c70e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Colorful mix of Caribbean hot peppers',
-    href: '#',
-    farmer: 'Spice Island Farm',
-    location: 'St. Croix',
+    imageSrc:
+      "https://images.unsplash.com/photo-1583328651071-c2980b5c70e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Colorful mix of Caribbean hot peppers",
+    href: "#",
+    farmer: "Spice Island Farm",
+    location: "St. Croix",
   },
   {
     id: 4,
-    name: 'Fresh Plantains (bunch)',
-    price: '$5',
+    name: "Fresh Plantains (bunch)",
+    price: "$5",
     rating: 4,
     reviewCount: 15,
-    imageSrc: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Ripe plantains ready for cooking',
-    href: '#',
-    farmer: 'Tropical Harvest',
-    location: 'St. Thomas',
+    imageSrc:
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Ripe plantains ready for cooking",
+    href: "#",
+    farmer: "Tropical Harvest",
+    location: "St. Thomas",
   },
   {
     id: 5,
-    name: 'Organic Basil Bundle',
-    price: '$3',
+    name: "Organic Basil Bundle",
+    price: "$3",
     rating: 5,
     reviewCount: 27,
-    imageSrc: 'https://images.unsplash.com/photo-1618375569909-3c8616cf7733?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Fresh basil herbs bundled',
-    href: '#',
-    farmer: 'Herb Paradise',
-    location: 'St. John',
+    imageSrc:
+      "https://images.unsplash.com/photo-1618375569909-3c8616cf7733?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Fresh basil herbs bundled",
+    href: "#",
+    farmer: "Herb Paradise",
+    location: "St. John",
   },
   {
     id: 6,
-    name: 'Sweet Potatoes (3 lbs)',
-    price: '$7',
+    name: "Sweet Potatoes (3 lbs)",
+    price: "$7",
     rating: 5,
     reviewCount: 19,
-    imageSrc: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Orange sweet potatoes from local farms',
-    href: '#',
-    farmer: 'Mountain View Farm',
-    location: 'St. Croix',
+    imageSrc:
+      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Orange sweet potatoes from local farms",
+    href: "#",
+    farmer: "Mountain View Farm",
+    location: "St. Croix",
   },
   {
     id: 7,
-    name: 'Fresh Mangoes (4 count)',
-    price: '$12',
+    name: "Fresh Mangoes (4 count)",
+    price: "$12",
     rating: 5,
     reviewCount: 42,
-    imageSrc: 'https://images.unsplash.com/photo-1553279431-d271bb29f835?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Ripe tropical mangoes',
-    href: '#',
-    farmer: 'Paradise Fruit Co',
-    location: 'St. Thomas',
+    imageSrc:
+      "https://images.unsplash.com/photo-1553279431-d271bb29f835?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Ripe tropical mangoes",
+    href: "#",
+    farmer: "Paradise Fruit Co",
+    location: "St. Thomas",
   },
   {
     id: 8,
-    name: 'Mixed Greens Salad Pack',
-    price: '$6',
+    name: "Mixed Greens Salad Pack",
+    price: "$6",
     rating: 4,
     reviewCount: 33,
-    imageSrc: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Fresh mixed greens for salad',
-    href: '#',
-    farmer: 'Coastal Gardens',
-    location: 'St. John',
+    imageSrc:
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Fresh mixed greens for salad",
+    href: "#",
+    farmer: "Coastal Gardens",
+    location: "St. John",
   },
   {
     id: 9,
-    name: 'Coconuts (fresh, 3 count)',
-    price: '$9',
+    name: "Coconuts (fresh, 3 count)",
+    price: "$9",
     rating: 5,
     reviewCount: 16,
-    imageSrc: 'https://images.unsplash.com/photo-1525385133512-2f3bdd039054?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Fresh coconuts with water',
-    href: '#',
-    farmer: 'Caribbean Coconut Co',
-    location: 'St. Croix',
+    imageSrc:
+      "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Fresh coconuts with water",
+    href: "#",
+    farmer: "Caribbean Coconut Co",
+    location: "St. Croix",
   },
   {
     id: 10,
-    name: 'Okra (1 lb)',
-    price: '$4',
+    name: "Okra (1 lb)",
+    price: "$4",
     rating: 4,
     reviewCount: 21,
-    imageSrc: 'https://images.unsplash.com/photo-1589621316382-008455b857cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Fresh okra pods',
-    href: '#',
-    farmer: 'Sunny Slope Farm',
-    location: 'St. Thomas',
+    imageSrc:
+      "https://images.unsplash.com/photo-1589621316382-008455b857cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Fresh okra pods",
+    href: "#",
+    farmer: "Sunny Slope Farm",
+    location: "St. Thomas",
   },
   {
     id: 11,
-    name: 'Callaloo Greens Bundle',
-    price: '$5',
+    name: "Callaloo Greens Bundle",
+    price: "$5",
     rating: 5,
     reviewCount: 28,
-    imageSrc: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Traditional callaloo greens',
-    href: '#',
-    farmer: 'Heritage Gardens',
-    location: 'St. John',
+    imageSrc:
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Traditional callaloo greens",
+    href: "#",
+    farmer: "Heritage Gardens",
+    location: "St. John",
   },
   {
     id: 12,
-    name: 'Breadfruit (medium)',
-    price: '$8',
+    name: "Breadfruit (medium)",
+    price: "$8",
     rating: 4,
     reviewCount: 12,
-    imageSrc: 'https://images.unsplash.com/photo-1566843071792-09208d62b2c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Fresh breadfruit from Caribbean farms',
-    href: '#',
-    farmer: 'Island Traditions',
-    location: 'St. Croix',
+    imageSrc:
+      "https://images.unsplash.com/photo-1566843071792-09208d62b2c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    imageAlt: "Fresh breadfruit from Caribbean farms",
+    href: "#",
+    farmer: "Island Traditions",
+    location: "St. Croix",
   },
-]
+];
 
-function classNames(...classes: (string | undefined | null | boolean)[]): string {
-  return classes.filter(Boolean).join(' ')
+function classNames(
+  ...classes: (string | undefined | null | boolean)[]
+): string {
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function MarketPage() {
@@ -196,7 +218,9 @@ export default function MarketPage() {
           Fresh Local Produce
         </h1>
         <p className="mx-auto mt-4 max-w-3xl text-lg text-gray-500">
-          Discover the freshest produce from Virgin Islands farms. Support local agriculture while getting the highest quality ingredients for your restaurant or business.
+          Discover the freshest produce from Virgin Islands farms. Support local
+          agriculture while getting the highest quality ingredients for your
+          restaurant or business.
         </p>
       </div>
 
@@ -267,7 +291,10 @@ export default function MarketPage() {
                           </svg>
                         </div>
                       </div>
-                      <label htmlFor={`price-${optionIdx}`} className="text-base text-gray-600 sm:text-sm">
+                      <label
+                        htmlFor={`price-${optionIdx}`}
+                        className="text-base text-gray-600 sm:text-sm"
+                      >
                         {option.label}
                       </label>
                     </div>
@@ -311,7 +338,10 @@ export default function MarketPage() {
                           </svg>
                         </div>
                       </div>
-                      <label htmlFor={`category-${optionIdx}`} className="text-base text-gray-600 sm:text-sm">
+                      <label
+                        htmlFor={`category-${optionIdx}`}
+                        className="text-base text-gray-600 sm:text-sm"
+                      >
                         {option.label}
                       </label>
                     </div>
@@ -357,7 +387,10 @@ export default function MarketPage() {
                           </svg>
                         </div>
                       </div>
-                      <label htmlFor={`location-${optionIdx}`} className="text-base text-gray-600 sm:text-sm">
+                      <label
+                        htmlFor={`location-${optionIdx}`}
+                        className="text-base text-gray-600 sm:text-sm"
+                      >
                         {option.label}
                       </label>
                     </div>
@@ -401,7 +434,10 @@ export default function MarketPage() {
                           </svg>
                         </div>
                       </div>
-                      <label htmlFor={`organic-${optionIdx}`} className="text-base text-gray-600 sm:text-sm">
+                      <label
+                        htmlFor={`organic-${optionIdx}`}
+                        className="text-base text-gray-600 sm:text-sm"
+                      >
                         {option.label}
                       </label>
                     </div>
@@ -434,8 +470,10 @@ export default function MarketPage() {
                       <a
                         href={option.href}
                         className={classNames(
-                          option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                          'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
+                          option.current
+                            ? "font-medium text-gray-900"
+                            : "text-gray-500",
+                          "block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden"
                         )}
                       >
                         {option.name}
@@ -454,7 +492,10 @@ export default function MarketPage() {
 
         <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
-            <div key={product.id} className="group relative border-r border-b border-gray-200 p-4 sm:p-6">
+            <div
+              key={product.id}
+              className="group relative border-r border-b border-gray-200 p-4 sm:p-6"
+            >
               <img
                 alt={product.imageAlt}
                 src={product.imageSrc}
@@ -467,9 +508,11 @@ export default function MarketPage() {
                     {product.name}
                   </a>
                 </h3>
-                
+
                 <div className="mt-2">
-                  <p className="text-xs text-green-600 font-medium">{product.farmer}</p>
+                  <p className="text-xs text-green-600 font-medium">
+                    {product.farmer}
+                  </p>
                   <p className="text-xs text-gray-400">{product.location}</p>
                 </div>
 
@@ -481,20 +524,26 @@ export default function MarketPage() {
                         key={rating}
                         aria-hidden="true"
                         className={classNames(
-                          product.rating > rating ? 'text-yellow-400' : 'text-gray-200',
-                          'size-4 shrink-0',
+                          product.rating > rating
+                            ? "text-yellow-400"
+                            : "text-gray-200",
+                          "size-4 shrink-0"
                         )}
                       />
                     ))}
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">{product.reviewCount} reviews</p>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {product.reviewCount} reviews
+                  </p>
                 </div>
-                <p className="mt-4 text-base font-semibold text-gray-900">{product.price}</p>
+                <p className="mt-4 text-base font-semibold text-gray-900">
+                  {product.price}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
