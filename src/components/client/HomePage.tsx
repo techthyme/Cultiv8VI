@@ -1,22 +1,15 @@
-// 
-
+//
 
 "use client";
 import React from "react";
 import Image from "next/image";
-import {
-  ShoppingCart,
-  Leaf,
-  Award,
-  Truck,
-  Star,
-} from "lucide-react";
+import { ShoppingCart, Leaf, Award, Truck, Star } from "lucide-react";
 
 const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Full Width Hero Section */}
-      <div className="relative min-h-screen bg-gradient-to-br from-green-600 via-green-700 to-green-900 text-white overflow-hidden">
+      <div className="relative bg-gradient-to-br from-green-600 via-green-700 to-green-900 text-white overflow-hidden">
         {/* Background Image Overlay */}
         <div className="absolute inset-0">
           <Image
@@ -34,7 +27,7 @@ const HomePage: React.FC = () => {
         <div className="absolute bottom-20 left-1/3 w-16 h-16 bg-green-500/15 rounded-full blur-xl animate-pulse delay-2000"></div>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex items-center min-h-screen">
+        <div className="relative z-10 flex __min-h-screen">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
             <div className="text-center">
               {/* Badge */}
@@ -47,23 +40,22 @@ const HomePage: React.FC = () => {
 
               {/* Main Headline */}
               <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
-                <span className="block text-white">Fresh.</span>
-                <span className="block text-green-200">Local.</span>
+                <span className="block text-white">Fresh farm to fork</span>
+                {/* <span className="block text-green-200">Local.</span>
                 <span className="block bg-gradient-to-r from-green-300 to-green-100 bg-clip-text text-transparent">
                   Connected.
-                </span>
+                </span> */}
               </h1>
 
               {/* Subtitle */}
               <p className="text-lg md:text-xl lg:text-2xl mb-12 text-green-100 max-w-4xl mx-auto leading-relaxed">
-                The premier platform connecting Virgin Islands farmers with
-                restaurants, bakeries, and food businesses. Get the freshest
-                local produce while supporting our community and reducing food
-                imports.
+                Connecting Virgin Islands farmers with restaurants, bakeries,
+                and food businesses delivering the freshest local produce
+                reducing our reliance on food imports.
               </p>
 
               {/* Stats Row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto">
+              <div className="hidden grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto">
                 <div className="text-center">
                   <div className="text-2xl md:text-3xl font-bold text-white mb-1">
                     150+
@@ -90,11 +82,27 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Call to Action Buttons */} 
-               {/* this button needs to be connected to the marke page */}
+              {/* Trust Indicators */}
+              <div className="mb-12 flex flex-wrap justify-center items-center gap-8 text-green-200">
+                <div className="flex items-center">
+                  <Award className="h-5 w-5 mr-2" />
+                  <span className="text-sm">Certified Organic Farms</span>
+                </div>
+                <div className="flex items-center">
+                  <Truck className="h-5 w-5 mr-2" />
+                  <span className="text-sm">Same-Day Delivery</span>
+                </div>
+                <div className="flex items-center">
+                  <Star className="h-5 w-5 mr-2 fill-current text-yellow-400" />
+                  <span className="text-sm">Rated by Local Businesses</span>
+                </div>
+              </div>
+
+              {/* Call to Action Buttons */}
+              {/* this button needs to be connected to the marke page */}
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
                 <button
-                  onClick={() => window.location.href = "/market"}
+                  onClick={() => (window.location.href = "/market")}
                   className="group relative bg-white text-green-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 min-w-[200px]"
                 >
                   <span className="relative z-10 flex items-center justify-center">
@@ -109,22 +117,6 @@ const HomePage: React.FC = () => {
                     <Leaf className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
                   </span>
                 </button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="flex flex-wrap justify-center items-center gap-8 text-green-200">
-                <div className="flex items-center">
-                  <Award className="h-5 w-5 mr-2" />
-                  <span className="text-sm">Certified Organic Farms</span>
-                </div>
-                <div className="flex items-center">
-                  <Truck className="h-5 w-5 mr-2" />
-                  <span className="text-sm">Same-Day Delivery</span>
-                </div>
-                <div className="flex items-center">
-                  <Star className="h-5 w-5 mr-2 fill-current text-yellow-400" />
-                  <span className="text-sm">Rated by Local Businesses</span>
-                </div>
               </div>
             </div>
           </div>
@@ -190,11 +182,11 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="py-16 bg-green-600 text-white">
+      <div className="hidden py-16 bg-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl md:text-4xl font-bold mb-2">150+</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">150ddd+</div>
               <div className="text-green-200">Local Farmers</div>
             </div>
             <div>
