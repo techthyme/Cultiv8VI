@@ -34,7 +34,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <CartProvider>
           <NavBar />
           <Suspense fallback={<p>Loading...</p>}>
-          <main>{children}</main>
+            <main>{children}</main>
           </Suspense>
         </CartProvider>
       </body>
