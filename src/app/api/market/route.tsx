@@ -22,7 +22,6 @@ export async function GET() {
     appliedFilters: {},
   };
 
-  await new Promise((r) => setTimeout(r, 500)); // simulate load
 
   return NextResponse.json(body, {
     headers: { "Cache-Control": "no-store" },
