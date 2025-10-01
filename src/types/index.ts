@@ -5,16 +5,15 @@
 export interface User {
   id: string;
   email: string;
-  username: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  handle: string;
   avatar?: string;
-  phoneNumber?: string;
+  phone?: string;
   address?: Address;
-  userType: UserType;
-  isVerified: boolean;
-  createdAt: string;
-  updatedAt: string;
+  userType?: UserType;
+  isVerified?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
   // Farmer-specific fields (when userType includes 'farmer')
   farmerProfile?: FarmerProfile;
 }
@@ -36,7 +35,7 @@ export interface Address {
   city: string;
   state: string;
   zipCode: string;
-  country: string;
+  country?: string;
   coordinates?: {
     latitude: number;
     longitude: number;
@@ -90,20 +89,20 @@ export interface Farm {
   images: string[];
   coverImage: string;
   certified: boolean;
-  certifications: Certification[];
   specialties: string[];
   ownerId: string;
   owner: User;
-  contact: ContactInfo;
-  products: Product[];
+  contact?: ContactInfo;
   operatingHours?: OperatingHours;
   seasonalInfo?: string;
-  deliveryOptions: DeliveryOption[];
-  paymentMethods: PaymentMethod[];
+  certifications?: Certification[];
+  deliveryOptions?: DeliveryOption[];
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  products?: Product[];
+  paymentMethods?: PaymentMethod[];
   minimumOrder?: number;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
   locationName?: string;
 }
 

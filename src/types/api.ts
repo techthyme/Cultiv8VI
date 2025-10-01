@@ -1,5 +1,5 @@
 
-import { Product } from "./index"
+import { Product, Farm } from "./index"
 export interface GetProductsResponse {
   products: Product[]
 }
@@ -8,6 +8,13 @@ export interface GetProductsRequest {
   query: Query;
 }
 
+export interface GetFarmsResponse {
+  farms: Farm[]
+}
+
+export interface GetFarmsRequest {
+  query: Query;
+}
 
 
 export interface Query {
