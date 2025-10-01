@@ -6,6 +6,8 @@ import {
   FarmingMethod,
   UserType,
   Product,
+  DeliveryOption,
+  PaymentMethod,
 } from "@/types";
 
 const viCities = ["Charlotte Amalie", "Christiansted", "Frederiksted", "Cruz Bay", "Coral Bay", "Anna's Retreat", "Altona", "Estate Frydenhoj"];
@@ -42,29 +44,34 @@ const viFarmNames = [
 ];
 
 const viSpecialties = [
-  ["Tropical Fruits", "Coconuts", "Bananas"],
-  ["Caribbean Herbs", "Thyme", "Mint", "Basil"], 
-  ["Root Vegetables", "Sweet Potatoes", "Yams"],
-  ["Leafy Greens", "Callaloo", "Spinach"],
-  ["Citrus Fruits", "Limes", "Oranges"],
-  ["Spices", "Hot Peppers", "Ginger"],
-  ["Plantains", "Breadfruit", "Mangoes"],
-  ["Sea Grapes", "Tamarind", "Passion Fruit"],
-  ["Free-range Chickens", "Fresh Eggs"],
-  ["Goat Products", "Goat Milk", "Goat Cheese"]
+  ["Tropical Fruits", "Coconuts", "Sugar Apples", "Soursop", "Guavas"],
+  ["Caribbean Herbs", "Virgin Islands Thyme", "Bay Leaves", "Lemongrass", "Caribbean Basil"], 
+  ["Root Vegetables", "Dasheen (Taro)", "Sweet Potatoes", "Cassava", "Malanga"],
+  ["Leafy Greens", "Callaloo", "Bok Choy", "Chinese Cabbage", "Water Spinach"],
+  ["Citrus Fruits", "Key Limes", "Grapefruits", "Calamondin", "Caribbean Oranges"],
+  ["VI Peppers & Spices", "Scotch Bonnet Peppers", "VI Seasoning Peppers", "Ginger", "Turmeric"],
+  ["Traditional Staples", "Plantains", "Breadfruit", "Green Bananas", "Eddoes"],
+  ["Indigenous Fruits", "Sea Grapes", "Tamarind", "Passion Fruit", "Genips", "Mammee Apples"],
+  ["Free-range Poultry", "Heritage Chickens", "Guinea Fowl", "Fresh Eggs", "Duck Eggs"],
+  ["Artisanal Products", "Goat Cheese", "Raw Honey", "Coconut Oil", "Traditional Preserves"],
+  ["Medicinal Plants", "Aloe Vera", "Moringa", "Neem", "Bush Tea Herbs"],
+  ["Aquaculture", "Tilapia", "Freshwater Prawns", "Catfish", "Hydroponic Lettuce"],
+  ["Traditional Grains", "Pigeon Peas", "Black-eyed Peas", "Lima Beans", "Kidney Beans"],
+  ["Ornamental Plants", "Bougainvillea", "Hibiscus", "Bird of Paradise", "Ti Plants"],
+  ["VI Specialty Crops", "Dragon Fruit", "Rambutan", "Star Fruit", "Jackfruit"]
 ];
 
 const viDescriptions = [
-  "Family-owned farm growing traditional Caribbean crops using sustainable methods passed down through generations.",
-  "Certified organic farm specializing in tropical fruits and vegetables native to the Virgin Islands.",
-  "Community-supported agriculture farm providing fresh, locally-grown produce to Virgin Islands restaurants.",
-  "Historic plantation turned modern organic farm, preserving traditional Caribbean farming techniques.",
-  "Small-scale permaculture farm focusing on climate-resilient crops suited to island conditions.",
-  "Cooperative farm owned by local families, growing diverse tropical crops for the local market.",
-  "Sustainable farm using rainwater harvesting and solar power to grow pesticide-free produce.",
-  "Mountainside farm taking advantage of cooler microclimates to grow a variety of crops year-round.",
-  "Coastal farm specializing in salt-tolerant crops and traditional Caribbean vegetables.",
-  "Multi-generational farm committed to preserving heritage varieties of Virgin Islands crops."
+  "Family-owned farm established in 1987, growing traditional Caribbean crops using sustainable methods passed down through generations. Specializes in hurricane-resistant varieties and traditional VI medicinal plants.",
+  "USDA Certified organic farm specializing in tropical fruits and vegetables native to the Virgin Islands. Known for award-winning callaloo and heritage tomato varieties that thrive in VI's tropical climate.",
+  "Community-supported agriculture farm providing fresh, locally-grown produce to Virgin Islands restaurants. Features aquaponics systems and traditional Taíno farming techniques adapted for modern sustainable agriculture.",
+  "Historic Whim Plantation turned modern organic farm, preserving traditional Caribbean farming techniques while incorporating climate-smart agriculture. Offers educational tours showcasing VI's agricultural heritage.",
+  "Small-scale permaculture farm focusing on climate-resilient crops suited to island conditions. Pioneered salt-tolerant vegetable cultivation and rainwater harvesting systems adapted to VI's unique geography.",
+  "Cooperative farm owned by local families, growing diverse tropical crops for the local market. Specializes in traditional VI staples like dasheen, breadfruit, and soursop with over 40 years of combined farming experience.",
+  "Sustainable farm using rainwater harvesting and solar power to grow pesticide-free produce. Features innovative greenhouse designs adapted for tropical storms and humidity management in the Caribbean climate.",
+  "Mountainside farm in the VI highlands taking advantage of cooler microclimates to grow temperate crops year-round. Known for successful cultivation of lettuce, herbs, and strawberries at elevation.",
+  "Coastal farm specializing in salt-tolerant crops and traditional Caribbean vegetables. Utilizes innovative desalination techniques and grows sea beans, sea grapes, and other coastal-adapted indigenous plants.",
+  "Multi-generational farm committed to preserving heritage varieties of Virgin Islands crops. Maintains seed banks of traditional VI cultivars and offers heritage plant starts to local gardeners."
 ];
 
 // Farm images mapping for variety - NO DUPLICATES within each farm
@@ -161,10 +168,80 @@ const farmImageSets = [
   },
 ];
 
+// Additional VI-specific farm data
+const viFarmDetails = [
+  {
+    establishedYear: 1987,
+    acreage: 12,
+    certifications: ["USDA Organic", "VI Local Agriculture Certified"],
+    farmingMethods: ["Permaculture", "Traditional Caribbean"],
+    deliveryZones: ["Charlotte Amalie", "Red Hook", "Tutu"],
+    operatingHours: "Mon-Sat: 6:00 AM - 6:00 PM",
+    paymentMethods: ["Cash", "Credit Card", "SNAP/EBT"],
+    website: "www.coralbayorganics.vi",
+    socialMedia: { instagram: "@coralbayorganics", facebook: "Coral Bay Organic Gardens" },
+    sustainabilityPractices: ["Rainwater harvesting", "Composting", "Natural pest control", "Solar drying"],
+    communityPrograms: ["School garden education", "Apprenticeship program"]
+  },
+  {
+    establishedYear: 1995,
+    acreage: 8,
+    certifications: ["USDA Organic", "Virgin Islands Good Agricultural Practices"],
+    farmingMethods: ["Organic", "Biointensive"],
+    deliveryZones: ["Magens Bay", "Charlotte Amalie", "Coral World"],
+    operatingHours: "Tue-Sun: 7:00 AM - 5:00 PM",
+    paymentMethods: ["Cash", "Credit Card", "Venmo"],
+    website: "www.magensbayfarm.com",
+    socialMedia: { instagram: "@magensbayfarm", facebook: "Magens Bay Farm VI" },
+    sustainabilityPractices: ["Drip irrigation", "Crop rotation", "Beneficial insects", "Compost tea"],
+    communityPrograms: ["Farm-to-table dinners", "Cooking classes with local chefs"]
+  },
+  {
+    establishedYear: 2001,
+    acreage: 25,
+    certifications: ["Cooperative Extension Certified", "Hurricane Preparedness Certified"],
+    farmingMethods: ["Sustainable", "Aquaponics"],
+    deliveryZones: ["Cane Bay", "Carambola", "Mahogany Run"],
+    operatingHours: "Daily: 6:00 AM - 7:00 PM",
+    paymentMethods: ["Cash", "Credit Card", "PayPal", "SNAP/EBT"],
+    website: "www.canebaycoop.vi",
+    socialMedia: { instagram: "@canebaycoop", facebook: "Cane Bay Agricultural Cooperative" },
+    sustainabilityPractices: ["Fish-plant symbiosis", "Renewable energy", "Water recycling"],
+    communityPrograms: ["Youth farming internships", "Community fish pond"]
+  },
+  {
+    establishedYear: 1733,
+    acreage: 60,
+    certifications: ["Historic Preservation", "USDA Organic", "Agritourism Certified"],
+    farmingMethods: ["Heritage", "Organic", "Educational"],
+    deliveryZones: ["Frederiksted", "Christiansted", "Estate Whim Museum"],
+    operatingHours: "Wed-Mon: 8:00 AM - 4:00 PM (Closed Tuesdays)",
+    paymentMethods: ["Cash", "Credit Card", "Museum Store Credit"],
+    website: "www.whimplantation.org/farm",
+    socialMedia: { instagram: "@whimplantation", facebook: "Estate Whim Plantation Museum" },
+    sustainabilityPractices: ["Heritage seed preservation", "Traditional windmill power", "Historical techniques"],
+    communityPrograms: ["Agricultural history tours", "Traditional cooking workshops", "Heritage seed library"]
+  },
+  {
+    establishedYear: 2010,
+    acreage: 5,
+    certifications: ["Naturally Grown", "Local Food Hub Certified"],
+    farmingMethods: ["Permaculture", "Urban farming"],
+    deliveryZones: ["Paradise Point", "Havensight", "Downtown Charlotte Amalie"],
+    operatingHours: "Mon-Fri: 7:00 AM - 6:00 PM, Sat: 8:00 AM - 2:00 PM",
+    paymentMethods: ["Cash", "Credit Card", "Mobile payments"],
+    website: "www.paradisepointproduce.vi",
+    socialMedia: { instagram: "@paradiseproduce", facebook: "Paradise Point Produce" },
+    sustainabilityPractices: ["Vertical growing", "Companion planting", "Natural fertilizers"],
+    communityPrograms: ["Urban gardening workshops", "Balcony farming consultations"]
+  }
+];
+
 export const mockFarms: Farm[] = Array.from({ length: 20 }).map((_, i) => {
   const user = mockUsers[i];
   const island = i < 10 ? "St. Thomas" : i < 15 ? "St. Croix" : "St. John";
   const imageSet = farmImageSets[i % farmImageSets.length];
+  const details = viFarmDetails[i % viFarmDetails.length];
   
   return {
     id: `farm-${i + 1}`,
@@ -188,10 +265,51 @@ export const mockFarms: Farm[] = Array.from({ length: 20 }).map((_, i) => {
     contact: {
       phone: user.phone || `+1-340-${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
       email: user.email,
+      website: details.website,
+      socialMedia: details.socialMedia,
     },
-    seasonalInfo: i % 3 === 0 ? "Peak harvest season: November through May. Hurricane season adjustments: June-November." : undefined,
+    seasonalInfo: [
+      "Peak harvest season: November through May. Hurricane season adjustments: June-November.",
+      "Year-round production with seasonal peaks. Storm-resistant greenhouses ensure consistent supply.",
+      "Tropical climate allows continuous harvesting. Special drought-resistant varieties during dry months."
+    ][i % 3],
+    certifications: details.certifications.map((cert, idx) => ({
+      id: `cert-${i}-${idx}`,
+      name: cert,
+      issuingBody: cert.includes("USDA") ? "United States Department of Agriculture" : "Virgin Islands Department of Agriculture",
+      issueDate: new Date(details.establishedYear + idx, 5, 15).toISOString(),
+      expiryDate: cert.includes("Organic") ? new Date(new Date().getFullYear() + 1, 5, 15).toISOString() : undefined
+    })),
+    deliveryOptions: [
+      DeliveryOption.FARM_PICKUP,
+      DeliveryOption.LOCAL_DELIVERY,
+      i % 3 === 0 ? DeliveryOption.FARMERS_MARKET : null
+    ].filter(Boolean) as DeliveryOption[],
+    operatingHours: {
+      monday: { open: "07:00", close: "17:00" },
+      tuesday: { open: "07:00", close: "17:00" },
+      wednesday: { open: "07:00", close: "17:00" },
+      thursday: { open: "07:00", close: "17:00" },
+      friday: { open: "07:00", close: "17:00" },
+      saturday: { open: "08:00", close: "14:00" },
+      sunday: i % 2 === 0 ? { open: "00:00", close: "00:00", closed: true } : { open: "09:00", close: "13:00" }
+    },
+    paymentMethods: details.paymentMethods.map(method => {
+      switch(method) {
+        case "Cash": return PaymentMethod.CASH;
+        case "Credit Card": return PaymentMethod.CREDIT_CARD;
+        case "PayPal": return PaymentMethod.PAYPAL;
+        case "Venmo": return PaymentMethod.VENMO;
+        case "SNAP/EBT": return PaymentMethod.CASH; // Map SNAP/EBT to cash for now
+        case "Mobile payments": return PaymentMethod.CREDIT_CARD; // Map mobile payments to credit card
+        case "Museum Store Credit": return PaymentMethod.CREDIT_CARD; // Map store credit to credit card
+        default: return PaymentMethod.CASH;
+      }
+    }),
+    minimumOrder: i % 3 === 0 ? 25 : i % 2 === 0 ? 50 : undefined,
+    locationName: `${viCities[i % viCities.length]}, ${island}`,
     isActive: true,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(details.establishedYear, 0, 1).toISOString(),
     updatedAt: new Date().toISOString(),
   };
 });

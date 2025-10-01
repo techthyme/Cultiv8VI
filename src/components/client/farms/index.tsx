@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { Farm } from "@/types";
 import Grid from "@/components/ui/grid";
 import Link from "next/link";
-import { Star, MapPin } from "lucide-react";
+import { Star, MapPin, Clock, Truck, CreditCard, Calendar, Award, Globe, Users, Leaf } from "lucide-react";
 import {
   Dialog,
   DialogBackdrop,
@@ -171,9 +171,30 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
                   <div className="text-sm">
                     <p>{farm.address.street}</p>
                     <p>{farm.address.city}, {farm.address.state} {farm.address.zipCode}</p>
+                    {farm.locationName && (
+                      <p className="text-xs text-gray-500 mt-1">{farm.locationName}</p>
+                    )}
                   </div>
                 </div>
               </div>
+
+              {/* Farm History */}
+              {farm.createdAt && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-medium text-gray-900">Established</h3>
+                  <div className="mt-2 flex items-center text-gray-600">
+                    <Calendar className="h-5 w-5 mr-2 flex-shrink-0" />
+                    <span className="text-sm">
+                      {new Date(farm.createdAt).getFullYear()}
+                      {farm.createdAt && (
+                        <span className="text-gray-500 ml-1">
+                          ({new Date().getFullYear() - new Date(farm.createdAt).getFullYear()} years in operation)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              )}
 
               {/* Contact */}
               <div className="mt-6">
@@ -209,22 +230,131 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
                 </div>
               </div>
 
-              {farm.certified && (
+
+              {/* Operating Hours */}
+              {farm.operatingHours && (
                 <div className="mt-6">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Operating Hours</h3>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="space-y-2">
+                      {Object.entries(farm.operatingHours).map(([day, hours]) => {
+                        if (!hours) return null;
+                        const dayName = day.charAt(0).toUpperCase() + day.slice(1);
+                        return (
+                          <div key={day} className="flex justify-between items-center text-sm">
+                            <span className="font-medium text-gray-900">{dayName}</span>
+                            <span className="text-gray-600">
+                              {hours.closed ? (
+                                <span className="text-red-600">Closed</span>
+                              ) : (
+                                `${hours.open} - ${hours.close}`
+                              )}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Delivery Options */}
+              {farm.deliveryOptions && farm.deliveryOptions.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Delivery Options</h3>
+                  <div className="space-y-2">
+                    {farm.deliveryOptions.map((option, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-600">
+                        <Truck className="h-4 w-4 mr-2 text-green-600 flex-shrink-0" />
+                        <span className="capitalize">
+                          {option.replace('_', ' ').toLowerCase()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Payment Methods */}
+              {farm.paymentMethods && farm.paymentMethods.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Payment Methods</h3>
+                  <div className="space-y-2">
+                    {farm.paymentMethods.map((method, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-600">
+                        <CreditCard className="h-4 w-4 mr-2 text-green-600 flex-shrink-0" />
+                        <span className="capitalize">
+                          {method.replace('_', ' ').toLowerCase()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Minimum Order */}
+              {farm.minimumOrder && (
+                <div className="mt-6">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <div className="h-6 w-6 rounded-full bg-green-600 flex items-center justify-center">
-                          <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
+                        <div className="h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">$</span>
                         </div>
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm font-medium text-green-800">Certified Organic Farm</p>
-                        <p className="text-sm text-green-600">This farm meets organic certification standards</p>
+                        <p className="text-sm font-medium text-blue-800">Minimum Order</p>
+                        <p className="text-sm text-blue-600">${farm.minimumOrder} minimum for delivery</p>
                       </div>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Website & Social Media */}
+              {(farm.contact?.website || farm.contact?.socialMedia) && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Online Presence</h3>
+                  <div className="space-y-2">
+                    {farm.contact?.website && (
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Globe className="h-4 w-4 mr-2 text-green-600 flex-shrink-0" />
+                        <a 
+                          href={farm.contact.website.startsWith('http') ? farm.contact.website : `https://${farm.contact.website}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600 hover:text-green-700 underline"
+                        >
+                          Visit Website
+                        </a>
+                      </div>
+                    )}
+                    {farm.contact?.socialMedia?.facebook && (
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Users className="h-4 w-4 mr-2 text-blue-600 flex-shrink-0" />
+                        <a 
+                          href={`https://facebook.com/${farm.contact.socialMedia.facebook.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-700 underline"
+                        >
+                          {farm.contact.socialMedia.facebook}
+                        </a>
+                      </div>
+                    )}
+                    {farm.contact?.socialMedia?.instagram && (
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Users className="h-4 w-4 mr-2 text-pink-600 flex-shrink-0" />
+                        <a 
+                          href={`https://instagram.com/${farm.contact.socialMedia.instagram.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-pink-600 hover:text-pink-700 underline"
+                        >
+                          {farm.contact.socialMedia.instagram}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -247,6 +377,82 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
                   </div>
                 </section>
               )}
+
+              {/* Certifications - Moved from sidebar */}
+              {farm.certifications && farm.certifications.length > 0 && (
+                <section className="mt-10">
+                  <h2 className="text-sm font-medium text-gray-900 mb-4">Farm Certifications</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {farm.certifications.map((cert, index) => (
+                      <div key={index} className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div className="flex items-start">
+                          <Award className="h-5 w-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-sm font-medium text-green-800">{cert.name}</p>
+                            <p className="text-xs text-green-600 mt-1">{cert.issuingBody}</p>
+                            {cert.expiryDate && (
+                              <p className="text-xs text-gray-500 mt-1">
+                                Valid until: {new Date(cert.expiryDate).toLocaleDateString()}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Virgin Islands Farming Practices */}
+              <section className="mt-10">
+                <h2 className="text-sm font-medium text-gray-900 mb-4">Virgin Islands Farming Practices</h2>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="flex items-center text-sm font-medium text-blue-900 mb-3">
+                        <Leaf className="h-4 w-4 mr-2" />
+                        Sustainability Practices
+                      </h3>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Rainwater harvesting systems</li>
+                        <li>• Natural composting methods</li>
+                        <li>• Hurricane-resistant crop selection</li>
+                        <li>• Solar-powered irrigation</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="flex items-center text-sm font-medium text-blue-900 mb-3">
+                        <Users className="h-4 w-4 mr-2" />
+                        Community Programs
+                      </h3>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• School garden education</li>
+                        <li>• Farming apprenticeships</li>
+                        <li>• Heritage seed preservation</li>
+                        <li>• Farm-to-table events</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Island Agriculture Heritage */}
+              <section className="mt-10">
+                <h2 className="text-sm font-medium text-gray-900 mb-4">Virgin Islands Agricultural Heritage</h2>
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+                  <div className="flex items-start">
+                    <Calendar className="h-5 w-5 text-amber-600 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm text-amber-800 leading-relaxed">
+                        This farm continues the rich agricultural tradition of the Virgin Islands, 
+                        preserving traditional Caribbean farming methods while adapting to modern 
+                        sustainable practices. Our crops are selected for their ability to thrive 
+                        in the tropical climate and hurricane conditions unique to the VI.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
 
