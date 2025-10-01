@@ -8,9 +8,9 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useCart } from "@/context/cart";
 
 const subtotal = "$108.00";
-const discount = { code: "CHEAPSKATE", amount: "$16.00" };
-const taxes = "$9.92";
-const shipping = "$8.00";
+const discount = { code: "CHEAPSKATE", amount: 16.00 };
+const taxes = 9.92;
+const shipping = 8.00;
 const total = "$141.92";
 
 export default function CheckoutPage() {
@@ -131,15 +131,15 @@ export default function CheckoutPage() {
                       {discount.code}
                     </span>
                   </dt>
-                  <dd className="text-gray-900">-{discount.amount}</dd>
+                  <dd className="text-gray-900">-${discount.amount}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt>Taxes</dt>
-                  <dd className="text-gray-900">{taxes}</dd>
+                  <dd className="text-gray-900">${taxes}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt>Shipping</dt>
-                  <dd className="text-gray-900">{shipping}</dd>
+                  <dd className="text-gray-900">${shipping}</dd>
                 </div>
               </dl>
             </DisclosurePanel>
@@ -237,20 +237,20 @@ export default function CheckoutPage() {
                     {discount.code}
                   </span>
                 </dt>
-                <dd className="text-gray-900">-{discount.amount}</dd>
+                <dd className="text-gray-900">-${discount.amount}</dd>
               </div>
               <div className="flex justify-between">
                 <dt>Taxes</dt>
-                <dd className="text-gray-900">{taxes}</dd>
+                <dd className="text-gray-900">${taxes}</dd>
               </div>
               <div className="flex justify-between">
                 <dt>Shipping</dt>
-                <dd className="text-gray-900">{shipping}</dd>
+                <dd className="text-gray-900">${shipping}</dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
                 <dt>Total</dt>
                 <dd className="text-base">
-                  {totalPrice + shipping + taxes - discount.amount}
+                  ${(totalPrice + shipping + taxes - discount.amount).toFixed(2)}
                 </dd>
               </div>
             </dl>
