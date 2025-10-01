@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  ReactNode,
+} from "react";
 import { Product } from "@/types";
 
 interface CartState {
@@ -12,7 +18,8 @@ type CartAction =
   | { type: "ADD_ITEM"; payload: Product }
   | { type: "REMOVE_ITEM"; payload: string }
   | { type: "UPDATE_QUANTITY"; payload: { cartId: string; quantity: number } }
-  | { type: "CLEAR_CART" };
+  | { type: "CLEAR_CART" }
+  | { type: "LOAD_CART"; payload: CartState };
 
 interface CartContextType {
   state: CartState;
@@ -22,13 +29,15 @@ interface CartContextType {
   clearCart: () => void;
 }
 
+const CART_STORAGE_KEY = "shopping_cart";
+
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case "ADD_ITEM":
       const currentProduct = state.products.find(
-        (p) => p.id === action.payload.id // Also fixed == to ===
+        (p) => p.id === action.payload.id
       );
 
       let newProducts: Product[];
@@ -39,16 +48,14 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
           ...state.products,
           {
             ...action.payload,
-            cartId: "cart_1",
+            cartId: `cart_${Date.now()}`,
             quantity: 1,
           },
         ];
       } else {
         // Update existing product - create NEW object
         newProducts = state.products.map((p) =>
-          p.id === action.payload.id
-            ? { ...p, quantity: p.quantity + 1 } // New object with updated quantity
-            : p
+          p.id === action.payload.id ? { ...p, quantity: p.quantity + 1 } : p
         );
       }
 
@@ -104,6 +111,9 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         totalPrice: 0,
       };
 
+    case "LOAD_CART":
+      return action.payload;
+
     default:
       return state;
   }
@@ -117,6 +127,28 @@ const initialState: CartState = {
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+      if (savedCart) {
+        const parsedCart: CartState = JSON.parse(savedCart);
+        dispatch({ type: "LOAD_CART", payload: parsedCart });
+      }
+    } catch (error) {
+      console.error("Failed to load cart from localStorage:", error);
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.error("Failed to save cart to localStorage:", error);
+    }
+  }, [state]);
 
   const addItemToCart = (item: Product) => {
     dispatch({ type: "ADD_ITEM", payload: item });
