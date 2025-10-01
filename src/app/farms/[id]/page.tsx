@@ -19,8 +19,10 @@ export default async function FarmsPage({
   // const res: GetFarmsResponse = data;
   // console.log("response from collabs: ", res);
   const farms: Farm[] = [];
-  const farm = mockFarms.find((f) => (f.id = id));
+  const farm = mockFarms.find((f) => f.id === id);
   if (farm) farms.push(farm);
 
+
+  //put the ui on page
   return <FarmsClient farms={farms} />;
 }

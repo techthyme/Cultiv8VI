@@ -42,6 +42,8 @@ const NavBar: FC<NavBarProps> = ({}) => {
       setActiveTab("market");
     } else if (currentPath === "/about") {
       setActiveTab("about");
+    } else if (currentPath.startsWith("/farms")) {
+      setActiveTab("farms");
     } else if (currentPath === "/help") {
       setActiveTab("help");
     } else if (currentPath === "/profile") {
@@ -78,6 +80,12 @@ const NavBar: FC<NavBarProps> = ({}) => {
                   className="px-3 py-2 rounded transition hover:bg-green-500"
                 >
                   Marketplace
+                </Link>
+                <Link
+                  href="/farms"
+                  className="px-3 py-2 rounded transition hover:bg-green-500"
+                >
+                  Farms
                 </Link>
                 <Link
                   href="/about"
@@ -181,16 +189,15 @@ const NavBar: FC<NavBarProps> = ({}) => {
                 Marketplace
               </Link>
 
-              {/* <button
-                onClick={() => setActiveTab("marketplace")}
+              <Link
+                href="/farms"
+                onClick={() => setActiveTab("farms")}
                 className={`px-3 py-2 rounded transition ${
-                  activeTab === "marketplace"
-                    ? "bg-green-700"
-                    : "hover:bg-green-500"
+                  activeTab === "farms" ? "bg-green-700" : "hover:bg-green-500"
                 }`}
               >
-                Marketplace
-              </button> */}
+                Farms
+              </Link>
 
               <Link
                 href="/about"
@@ -303,6 +310,19 @@ const NavBar: FC<NavBarProps> = ({}) => {
                 }`}
               >
                 Marketplace
+              </Link>
+
+              <Link
+                href="/farms"
+                onClick={() => {
+                  setActiveTab("farms");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-left px-3 py-2 rounded transition w-full block ${
+                  activeTab === "farms" ? "bg-green-700" : "hover:bg-green-500"
+                }`}
+              >
+                Farms
               </Link>
 
               <Link

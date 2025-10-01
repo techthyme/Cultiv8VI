@@ -8,18 +8,22 @@ import {
   Product,
 } from "@/types";
 
+const viCities = ["Charlotte Amalie", "Christiansted", "Frederiksted", "Cruz Bay", "Coral Bay", "Anna's Retreat", "Altona", "Estate Frydenhoj"];
+const viStreets = ["Queen Cross Street", "King Street", "Waterfront", "Centerline Road", "Southside Road", "Northside Road", "Estate Road", "Cane Bay Road"];
+const viNames = ["Maria", "José", "Carlos", "Ana", "Miguel", "Carmen", "Luis", "Rosa", "Pedro", "Sofia", "Antonio", "Isabella", "Roberto", "Esperanza", "Manuel", "Dolores", "Francisco", "Luz", "Ramón", "Esperanza"];
+
 export const mockUsers: User[] = Array.from({ length: 20 }).map((_, i) => ({
   id: `user-${i + 1}`,
-  email: `farmer${i + 1}@example.com`,
-  name: `Farmer ${i + 1}`,
-  handle: `farmer${i + 1}`,
-  avatar: `https://placehold.co/100x100?text=Farmer+${i + 1}`,
-  phone: `+1-555-000${i + 1}`,
+  email: `${viNames[i % viNames.length].toLowerCase()}${i + 1}@cultiv8vi.com`,
+  name: `${viNames[i % viNames.length]} ${i % 2 === 0 ? 'Rodriguez' : 'Martinez'}`,
+  handle: `${viNames[i % viNames.length].toLowerCase()}${i + 1}`,
+  avatar: `https://placehold.co/100x100?text=${viNames[i % viNames.length]}`,
+  phone: `+1-340-${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
   address: {
-    street: `${100 + i} Country Rd`,
-    city: `Farmtown`,
-    state: `State ${i + 1}`,
-    zipCode: `1000${i}`,
+    street: `${100 + i} ${viStreets[i % viStreets.length]}`,
+    city: viCities[i % viCities.length],
+    state: i < 10 ? "St. Thomas" : i < 15 ? "St. Croix" : "St. John",
+    zipCode: i < 10 ? `00802` : i < 15 ? `00820` : `00831`,
   },
   userType: UserType.FARMER,
   isVerified: i % 2 === 0,
@@ -27,37 +31,76 @@ export const mockUsers: User[] = Array.from({ length: 20 }).map((_, i) => ({
   updatedAt: new Date().toISOString(),
 }));
 
+const viFarmNames = [
+  "Coral Bay Organic Gardens", "Magens Bay Farm", "Cane Bay Agricultural Cooperative", 
+  "Estate Whim Plantation", "Paradise Point Produce", "Mahogany Run Farm",
+  "Sapphire Beach Gardens", "Mountaintop Agricultural Estate", "Secret Harbour Farm",
+  "Compass Point Gardens", "Pineapple Beach Farm", "Estate Bordeaux Organics",
+  "Cruz Bay Community Garden", "Lindqvist Beach Farm", "Estate Catherineberg Gardens",
+  "Hull Bay Sustainable Farm", "Estate Mandahl Produce", "Dorothea Bay Gardens",
+  "Estate Bovoni Farm", "Coakley Bay Agricultural Co-op"
+];
+
+const viSpecialties = [
+  ["Tropical Fruits", "Coconuts", "Bananas"],
+  ["Caribbean Herbs", "Thyme", "Mint", "Basil"], 
+  ["Root Vegetables", "Sweet Potatoes", "Yams"],
+  ["Leafy Greens", "Callaloo", "Spinach"],
+  ["Citrus Fruits", "Limes", "Oranges"],
+  ["Spices", "Hot Peppers", "Ginger"],
+  ["Plantains", "Breadfruit", "Mangoes"],
+  ["Sea Grapes", "Tamarind", "Passion Fruit"],
+  ["Free-range Chickens", "Fresh Eggs"],
+  ["Goat Products", "Goat Milk", "Goat Cheese"]
+];
+
+const viDescriptions = [
+  "Family-owned farm growing traditional Caribbean crops using sustainable methods passed down through generations.",
+  "Certified organic farm specializing in tropical fruits and vegetables native to the Virgin Islands.",
+  "Community-supported agriculture farm providing fresh, locally-grown produce to Virgin Islands restaurants.",
+  "Historic plantation turned modern organic farm, preserving traditional Caribbean farming techniques.",
+  "Small-scale permaculture farm focusing on climate-resilient crops suited to island conditions.",
+  "Cooperative farm owned by local families, growing diverse tropical crops for the local market.",
+  "Sustainable farm using rainwater harvesting and solar power to grow pesticide-free produce.",
+  "Mountainside farm taking advantage of cooler microclimates to grow a variety of crops year-round.",
+  "Coastal farm specializing in salt-tolerant crops and traditional Caribbean vegetables.",
+  "Multi-generational farm committed to preserving heritage varieties of Virgin Islands crops."
+];
+
 export const mockFarms: Farm[] = Array.from({ length: 20 }).map((_, i) => {
   const user = mockUsers[i];
+  const island = i < 10 ? "St. Thomas" : i < 15 ? "St. Croix" : "St. John";
+  
   return {
     id: `farm-${i + 1}`,
-    name: `Sunny Fields Farm ${i + 1}`,
+    name: viFarmNames[i],
     farmerName: user.name,
-    description: `A family-owned organic farm specializing in fresh produce, dairy, and sustainable agriculture. Farm #${
-      i + 1
-    } is known for its community involvement and eco-friendly practices.`,
+    description: viDescriptions[i % viDescriptions.length],
     address: {
-      street: `${200 + i} Green Valley Rd`,
-      city: `Harvestville`,
-      state: `State ${i + 1}`,
-      zipCode: `2000${i}`,
+      street: `${200 + i} ${viStreets[i % viStreets.length]}`,
+      city: viCities[i % viCities.length],
+      state: island,
+      zipCode: island === "St. Thomas" ? "00802" : island === "St. Croix" ? "00820" : "00831",
     },
     rating: parseFloat((Math.random() * 2 + 3).toFixed(1)), // between 3.0–5.0
-    reviewCount: Math.floor(Math.random() * 200),
+    reviewCount: Math.floor(Math.random() * 150 + 25), // 25-175 reviews
     images: [
-      `https://placehold.co/600x400?text=Farm+${i + 1}+Image1`,
-      `https://placehold.co/600x400?text=Farm+${i + 1}+Image2`,
+      `https://placehold.co/600x400?text=Farm+1+Image1`,
+      `https://placehold.co/600x400?text=Farm+1+Image2`,
     ],
-    coverImage: `https://placehold.co/800x500?text=Farm+${i + 1}+Cover`,
-    certified: i % 3 === 0,
-    specialties: [
-      "Organic Vegetables",
-      "Free-range Eggs",
-      "Dairy Products",
-      ...(i % 2 === 0 ? ["Fruit Orchards"] : ["Herbs"]),
-    ],
+    coverImage: `https://placehold.co/800x500?text=Farm+1+Cover`,
+    certified: i % 4 === 0, // 25% are certified organic
+    specialties: viSpecialties[i % viSpecialties.length],
     ownerId: user.id,
     owner: user,
+    contact: {
+      phone: user.phone || `+1-340-${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
+      email: user.email,
+    },
+    seasonalInfo: i % 3 === 0 ? "Peak harvest season: November through May. Hurricane season adjustments: June-November." : undefined,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
 });
 
