@@ -13,6 +13,7 @@ import {
   Award,
 } from "lucide-react";
 import { FarmingMethod, Product } from "@/types";
+import { useCart } from "@/context/cart";
 interface ProductDetailModalProps {
   product: Product;
   isOpen: boolean;
@@ -26,10 +27,12 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onClose,
   onAddToCart,
 }) => {
+  const { addItemToCart } = useCart();
   if (!isOpen) return null;
 
   const handleAddToCart = () => {
     onAddToCart(product);
+    addItemToCart(product);
     onClose(); // Close modal after adding to cart
   };
 
