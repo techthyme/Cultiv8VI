@@ -67,9 +67,104 @@ const viDescriptions = [
   "Multi-generational farm committed to preserving heritage varieties of Virgin Islands crops."
 ];
 
+// Farm images mapping for variety - NO DUPLICATES within each farm
+const farmImageSets = [
+  // Farm 1 - Coral Bay Organic Gardens (Tropical Fruits)
+  {
+    images: [
+      "/smiling-black-farmer-with-fresh-bananas-on-plantat-2025-01-09-08-21-26-utc.jpg",
+      "/woman-on-the-banana-plantation-with-rich-harvest-2025-03-15-23-52-53-utc.jpg",
+      "/bunch-of-bananas-on-gray-background-shopping-for-2025-01-10-04-57-31-utc.jpg",
+    ],
+    coverImage: "/smiling-black-farmer-with-fresh-bananas-on-plantat-2025-01-09-08-21-26-utc.jpg",
+  },
+  // Farm 2 - Magens Bay Farm (Caribbean Herbs)
+  {
+    images: [
+      "/farmer-eco-agriculture-at-organic-farm-2025-01-29-08-04-42-utc.jpg",
+      "/bunch-of-fresh-organic-basil-in-cutting-board-on-r-2025-02-11-14-01-29-utc.jpg",
+      "/sprig-of-mint-on-wooden-board-2024-11-03-03-23-34-utc.jpg",
+    ],
+    coverImage: "/farmer-eco-agriculture-at-organic-farm-2025-01-29-08-04-42-utc.jpg",
+  },
+  // Farm 3 - Cane Bay Agricultural Cooperative (Root Vegetables)
+  {
+    images: [
+      "/a-farmer-with-a-tray-of-organic-bell-peppers-fresh-2025-04-04-01-06-58-utc.jpg",
+      "/a-boy-holding-a-large-wooden-box-of-fresh-vegetabl-2025-04-04-06-55-28-utc.jpg",
+      "/person-using-garden-hose-to-wash-beetroots-2024-10-18-07-49-16-utc.jpg",
+    ],
+    coverImage: "/a-farmer-with-a-tray-of-organic-bell-peppers-fresh-2025-04-04-01-06-58-utc.jpg",
+  },
+  // Farm 4 - Estate Whim Plantation (Leafy Greens)
+  {
+    images: [
+      "/here-you-go-2025-04-06-05-46-28-utc.jpg",
+      "/african-farmers-carrying-vegetables-and-a-hoe-2025-02-02-20-10-56-utc.jpg",
+      "/fresh-lettuce-and-green-onion-field-2025-03-26-03-04-03-utc.jpg",
+    ],
+    coverImage: "/here-you-go-2025-04-06-05-46-28-utc.jpg",
+  },
+  // Farm 5 - Paradise Point Produce (Citrus Fruits)
+  {
+    images: [
+      "/red-pomegranate-2025-02-11-15-05-17-utc.jpg",
+      "/farmer-showing-a-freshly-picked-tomato-in-a-field-2025-06-05-22-15-09-utc.jpg",
+      "/mix-of-red-sweet-tomatoes-2024-10-11-22-22-06-utc.jpg",
+    ],
+    coverImage: "/red-pomegranate-2025-02-11-15-05-17-utc.jpg",
+  },
+  // Farm 6 - Mahogany Run Farm (Spices)
+  {
+    images: [
+      "/farmer-in-the-field-2025-03-07-11-59-38-utc.jpg",
+      "/multiracial-harvesters-on-plantation-with-papaya-p-2025-01-08-02-50-18-utc.jpg",
+      "/smiling-black-harvester-touching-papaya-on-plant-i-2025-01-09-17-51-54-utc.jpg",
+    ],
+    coverImage: "/farmer-in-the-field-2025-03-07-11-59-38-utc.jpg",
+  },
+  // Farm 7 - Sapphire Beach Gardens (Plantains)
+  {
+    images: [
+      "/a-boy-holding-a-large-wooden-box-of-fresh-vegetabl-2025-04-04-13-05-12-utc.jpg",
+      "/whole-yellow-plantains-2025-03-23-20-47-57-utc.jpg",
+      "/coconut-water-and-coconuts-on-a-bright-pastel-back-2024-12-05-17-32-33-utc.jpg",
+    ],
+    coverImage: "/a-boy-holding-a-large-wooden-box-of-fresh-vegetabl-2025-04-04-13-05-12-utc.jpg",
+  },
+  // Farm 8 - Mountaintop Agricultural Estate (Sea Grapes)
+  {
+    images: [
+      "/organic-raw-brown-tamarind-2025-01-16-16-17-01-utc.jpg",
+      "/nominated-2024-11-07-13-31-21-utc.jpg",
+      "/close-up-view-of-unpeeled-dried-beans-laid-side-by-2025-02-10-10-52-02-utc.jpg",
+    ],
+    coverImage: "/organic-raw-brown-tamarind-2025-01-16-16-17-01-utc.jpg",
+  },
+  // Farm 9 - Secret Harbour Farm (Free-range Chickens)
+  {
+    images: [
+      "/white-and-brown-eggs-on-linen-cloth-2025-04-04-11-25-56-utc.jpg",
+      "/glass-of-milk-2024-09-18-20-02-35-utc.jpg",
+      "/happy-farmer-african-family-on-livestock-farm-2025-02-12-03-32-58-utc.jpg",
+    ],
+    coverImage: "/white-and-brown-eggs-on-linen-cloth-2025-04-04-11-25-56-utc.jpg",
+  },
+  // Farm 10 - Compass Point Gardens (Goat Products)
+  {
+    images: [
+      "/confident-farmer-standing-in-green-field-with-arms-2024-12-07-23-45-00-utc.jpg",
+      "/glass-of-iced-passion-fruit-soda-with-lemon-and-pa-2025-03-26-13-57-16-utc.jpg",
+      "/senior-african-farmer-working-in-countryside-harve-2024-12-04-15-46-01-utc.jpg",
+    ],
+    coverImage: "/confident-farmer-standing-in-green-field-with-arms-2024-12-07-23-45-00-utc.jpg",
+  },
+];
+
 export const mockFarms: Farm[] = Array.from({ length: 20 }).map((_, i) => {
   const user = mockUsers[i];
   const island = i < 10 ? "St. Thomas" : i < 15 ? "St. Croix" : "St. John";
+  const imageSet = farmImageSets[i % farmImageSets.length];
   
   return {
     id: `farm-${i + 1}`,
@@ -84,11 +179,8 @@ export const mockFarms: Farm[] = Array.from({ length: 20 }).map((_, i) => {
     },
     rating: parseFloat((Math.random() * 2 + 3).toFixed(1)), // between 3.0–5.0
     reviewCount: Math.floor(Math.random() * 150 + 25), // 25-175 reviews
-    images: [
-      `https://placehold.co/600x400?text=Farm+1+Image1`,
-      `https://placehold.co/600x400?text=Farm+1+Image2`,
-    ],
-    coverImage: `https://placehold.co/800x500?text=Farm+1+Cover`,
+    images: imageSet.images,
+    coverImage: imageSet.coverImage,
     certified: i % 4 === 0, // 25% are certified organic
     specialties: viSpecialties[i % viSpecialties.length],
     ownerId: user.id,

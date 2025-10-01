@@ -125,10 +125,10 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
                 className="col-start-2 aspect-3/2 size-full rounded-lg object-cover max-lg:hidden"
               />
             )}
-            {farm.images[1] && (
+            {farm.images[2] && (
               <img
                 alt={farm.name}
-                src={farm.images[1]}
+                src={farm.images[2]}
                 className="col-start-2 row-start-2 aspect-3/2 size-full rounded-lg object-cover max-lg:hidden"
               />
             )}
@@ -306,7 +306,7 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
           {farms.map((farm) => (
             <div
               key={farm.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full"
             >
               <div className="relative">
                 <img
@@ -321,7 +321,7 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
                 )}
               </div>
               
-              <div className="p-4">
+              <div className="p-4 flex flex-col flex-grow">
                 <h3 className="font-semibold text-gray-900 text-lg mb-2">
                   {farm.name}
                 </h3>
@@ -362,6 +362,9 @@ const FarmersClient: FC<FarmersClientProps> = ({ farms }) => {
                     )}
                   </div>
                 </div>
+                
+                {/* Spacer to push button to bottom */}
+                <div className="flex-grow"></div>
                 
                 {/* View Farm Button */}
                 <Link
